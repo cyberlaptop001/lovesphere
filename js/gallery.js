@@ -118,7 +118,13 @@ function clearFilters() { /* ... */ }
 function sortUsers() { /* ... */ }
 function changePage(page) { /* ... */ }
 function setupPagination() { /* ... */ }
-function toggleTheme() { /* ... */ }
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("light-mode");
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+}
+
 function showMessage(text) { /* ... */ }
 
 window.onload = function () {
