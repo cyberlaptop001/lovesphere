@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - LoveSphere</title>
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+  <header style="text-align:center; margin-bottom: 20px;">
+    <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#ff007f; text-shadow: 0 0 10px #ff007f;">LoveSphere Admin Panel</h1>
+  </header>
+
+  <button onclick="logout()" style="margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto;">Logout</button>
+
+  <div class="tab-menu" style="text-align:center;">
+    <button class="tab-link" onclick="switchTab('users')">Users</button>
+    <button class="tab-link" onclick="switchTab('banners')">Banners</button>
+    <button class="tab-link" onclick="switchTab('updates')">Admin Updates</button>
+  </div>
+
+  <!-- USERS TAB -->
+  <div class="tab-section" id="tab-users">
+    <h2>Find User</h2>
+    <input type="text" id="findUserName" placeholder="Enter user name, ID or rank" />
+    <button onclick="findUser()">Find User</button>
+
+    <div id="userDetails" style="display:none; flex-direction: column;">
+      <h3>Edit / Remove User</h3>
+      <input type="hidden" id="editUserId" />
+      <label>Name: <input type="text" id="editUserName" /></label>
+      <label>Age: <input type="number" id="editUserAge" /></label>
+      <label>Description: <textarea id="editUserDesc"></textarea></label>
+      <label>Rank: <input type="number" id="editUserRank" /></label>
+      <label>Image URL: <input type="text" id="editUserImage" oninput="previewImage('editUserImage', 'editPreview')" /></label>
+      <img id="editPreview" src="#" alt="Image Preview" style="display:none; width:100px; height:100px;" />
+      <button onclick="updateUser()">Update</button>
+      <button onclick="removeUser()">Remove</button>
+      <button onclick="cancelEdit()">Cancel</button>
+
+      <!-- Mobile Numbers Section -->
+      <div id="mobileNumbersSection" style="margin-top:20px;">
+        <h4>User Mobile Numbers</h4>
+        <ul id="mobileNumbersList"></ul>
+        <input type="text" id="newMobileNumber" placeholder="Add mobile number" />
+        <select id="newMobileType">
+          <option value="call">Call</option>
+          <option value="chat">Chat</option>
+          <option value="both">Both</option>
+        </select>
+        <button onclick="addMobileNumber()">Add Mobile Number</button>
+      </div>
+    </div>
+
+    <h2>Add New User</h2>
+    <label>Name: <input type="text" id="addUserName" /></label>
+    <label>Age: <input type="number" id="addUserAge" /></label>
+    <label>Description: <textarea id="addUserDesc"></textarea></label>
+    <label>Rank: <input type="number" id="addUserRank" /></label>
+    <label>Image URL: <input type="text" id="addUserImage" oninput="previewImage('addUserImage', 'addPreview')" /></label>
+    <img id="addPreview" src="#" alt="Image Preview" style="display:none; width:100px; height:100px;" />
+    <button onclick="addUser()">Add User</button>
+
+    <h2>Existing Users</h2>
+    <table id="userTable" border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Description</th>
+          <th>Rank</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Assign Mobile Numbers -->
+    <div class="mobile-manage">
+      <h3>Assign Mobile Number to Users</h3>
+      <label>Mobile Number:
+        <input type="text" id="assignMobileNumber" placeholder="Enter mobile number" />
+      </label>
+      <label>Type:
+        <select id="assignMobileType">
+          <option value="call">Call</option>
+          <option value="chat">Chat</option>
+          <option value="both">Both</option>
+        </select>
+      </label>
+      <label>Assign To:
+        <select id="assignTarget">
+          <option value="single">Single User</option>
+          <option value="multiple">Multiple Users</option>
+          <option value="all">All Users</option>
+        </select>
+      </label>
+      <input type="text" id="assignUserInput" placeholder="Enter user ID, name or rank (comma-separated for multiple)" />
+      <button onclick="assignMobileToUsers()">Assign</button>
+    </div>
+  </div>
+
+  <!-- BANNERS TAB -->
+  <div class="tab-section" id="tab-banners" style="display:none;">
+    <h2>Banner Message</h2>
+    <textarea id="bannerMessage" rows="4" cols="50" placeholder="Enter banner message here..."></textarea>
+    <br />
+    <button onclick="saveBanner()">Save Banner</button>
+  </div>
+
+  <!-- ADMIN UPDATES TAB -->
+  <div class="tab-section" id="tab-updates" style="display:none;">
+    <h2>Admin Updates</h2>
+    <textarea id="adminUpdateText" rows="5" cols="70" placeholder="Add admin update..."></textarea>
+    <br />
+    <button onclick="saveAdminUpdate()">Post Update</button>
+    <div id="adminUpdatesList"></div>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(tab => tab.style.display = 'none');
+      document.getElementById('tab-' + tabId).style.display = 'block';
+    }
+
+    window.onload = function () {
+      switchTab('users');
+    }
+  </script>
+
+  <script src="../js/admin-panel.js"></script>
+</body>
+</html>
