@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery - LoveSphere</title>
+  <link rel="stylesheet" href="css/gallery.css" />
+</head>
+<body class="light-mode">
+  <!-- 🔝 Top Menu -->
+  <div class="top-menu">
+    <div class="logo">LoveSphere</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="seo.html">Policy & Guidelines</a>
+    </nav>
+    <button id="themeToggle" class="glow-button small">Toggle Theme</button>
+  </div>
+
+  <!-- 🔍 Filter/Search Bar -->
+  <div id="filterBar">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+    <input type="text" id="filterLocation" placeholder="Location" />
+    <input type="text" id="filterServices" placeholder="Services" />
+    <input type="number" id="minAge" placeholder="Min Age" />
+    <input type="number" id="maxAge" placeholder="Max Age" />
+    <input type="number" id="minHeight" placeholder="Min Height (cm)" />
+    <input type="number" id="maxHeight" placeholder="Max Height (cm)" />
+    <select id="categorySelect">
+      <option value="">Category</option>
+      <option value="College Girl">College Girl</option>
+      <option value="Bhabhi">Bhabhi</option>
+      <option value="Aunty">Aunty</option>
+    </select>
+    <select id="subCategorySelect">
+      <option value="">Sub-Category</option>
+      <option value="Model">Model</option>
+      <option value="Celebrity">Celebrity</option>
+      <option value="News Anchor">News Anchor</option>
+      <option value="Bollywood Model">Bollywood Model</option>
+    </select>
+    <select id="areaSelect">
+      <option value="">Area</option>
+      <option value="Charbagh">Charbagh</option>
+      <option value="Aliganj">Aliganj</option>
+      <option value="Gomtinagar">Gomtinagar</option>
+    </select>
+    <select id="ageSelect">
+      <option value="">Age Group</option>
+      <option value="18-22">18-22</option>
+      <option value="23-28">23-28</option>
+      <option value="29-35">29-35</option>
+      <option value="35+">35+</option>
+    </select>
+    <select id="topRatedSelect">
+      <option value="">Top Rated</option>
+      <option value="yes">Yes</option>
+    </select>
+    <select id="sortBy">
+      <option value="">Sort By</option>
+      <option value="age">Age</option>
+      <option value="rank">Rank</option>
+      <option value="name">Name</option>
+      <option value="location">Location</option>
+    </select>
+    <br />
+    <button id="filterBtn" class="glow-button">Apply Filters</button>
+    <button id="clearFilterBtn" class="glow-button">Clear Filters</button>
+  </div>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 20px;
+      font-size: 2rem;
+    }
+  </style>
+
+<video autoplay muted loop id="bg-video">
+  <source src="videos/bg.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+  
+</style> 
+  
+  <!-- 🎯 Tags -->
+  <div id="activeTags" class="tag-container"></div>
+
+  <!-- 📊 Result Count -->
+  <div id="resultCount">Total Results: 0</div>
+
+  <!-- 👤 User Cards -->
+  <div class="user-container" id="userCards"></div>
+
+  <!-- 🔄 Pagination -->
+  <div class="pagination">
+    <button id="prevPage" class="glow-button small">Prev</button>
+    <span id="pageNumber">Page 1</span>
+    <button id="nextPage" class="glow-button small">Next</button>
+  </div>
+
+  <!-- 🔝 Back to Top -->
+  <button id="backToTop" class="glow-button small" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Back to Top</button>
+
+  <!-- 💬 Popup -->
+  <div id="messagePopup" class="popup hidden">
+    <span id="popupText">Message</span>
+  </div>
+
+  <!-- 🦶 Footer -->
+  <div class="footer">
+    <a href="#">© 2025 LoveSphere</a>
+    <a href="seo.html">Policy & Guidelines</a>
+  </div>
+
+  <script src="js/gallery.js"></script>
+</body>
+</html>
