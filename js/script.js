@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       location: locations[i % locations.length],
       description: descriptions[i % descriptions.length],
       rank: i,
-      image: `../images/user${i}.jpg`
+      image: `images/user${i}.jpg`
     });
   }
 
