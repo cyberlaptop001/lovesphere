@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         location: i % 3 === 0 ? 'Los Angeles, USA' : i % 3 === 1 ? 'Paris, France' : 'Tokyo, Japan',
         description: `I am User ${i}, excited to connect with you! Let's explore something amazing together.`,
         rank: i,
-        image: `../images/user${i}.jpg`
+        image: `images/user${i}.jpg`
       });
     }
   
