@@ -54,8 +54,9 @@ function generateUsers(count) {
     const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : "Aunty";
     const subCategory = subCategories[Math.floor(Math.random() * subCategories.length)];
     const name = names[i % names.length];
-    const location = sampleLocations[i % sampleLocations.length];
-    const description = sampleDescriptions[i % sampleDescriptions.length];
+const location = sampleLocations[i % sampleLocations.length];
+const description = sampleDescriptions[i % sampleDescriptions.length];
+
 
     const user = {
       id: i + 1,
