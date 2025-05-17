@@ -46,7 +46,7 @@ function generateUsers(count) {
       description: sampleDescriptions[i % sampleDescriptions.length],
       rank: i,
       online: i % 2 === 0,
-      image: `../images/user${i}.jpg`,
+      image: `images/user${i}.jpg`,
       keywords: seoKeywords,
       topRated: i % 10 === 0,
       isNew: i > count - 10,
