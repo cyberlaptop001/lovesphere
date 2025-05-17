@@ -23,10 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 🧠 Generate Dummy Users
 function generateUsers(count) {
-  const names = [
-    "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
-    "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
-  ];
+ const names = [
+  "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
+  "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
+];
+
 
   const sampleServices = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
   const sampleDescriptions = [
