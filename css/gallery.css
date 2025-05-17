@@ -107,10 +107,11 @@ a {
 
 /* 👤 User Container & Card Layout */
 .user-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   padding: 20px;
+  align-items: stretch;
 }
 
 
