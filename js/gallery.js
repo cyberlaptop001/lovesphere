@@ -21,18 +21,25 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextPage").addEventListener("click", () => changePage(currentPage + 1));
 });
 
-// 🧠 Generate Dummy Users if galleryUsers is not found
+// 🧠 Generate Dummy Users
 function generateUsers(count) {
-  const names = [/*... same as before ...*/];
+  const names = Array.from({ length: count }, (_, i) => `User ${i + 1}`);
   const sampleServices = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
-  const sampleLocations = [/*... same as before ...*/];
-  const sampleDescriptions = [/*... same as before ...*/];
+  const sampleLocations = ["Lucknow", "Delhi", "Mumbai", "Bangalore", "Jaipur"];
+  const sampleDescriptions = [
+    "Charming, bubbly personality.",
+    "Elite, elegant and educated.",
+    "Sweet, friendly and passionate.",
+    "Fun-loving, easy-going vibe.",
+    "Smart, witty, and independent.",
+    "Energetic and open-minded."
+  ];
   const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
-  const seoKeywords = `Lucknow escorts, Call girls in Lucknow, Escort services Lucknow, ...`;
+  const seoKeywords = `Lucknow escorts, Call girls in Lucknow, Escort services Lucknow`;
 
   for (let i = 1; i <= count; i++) {
     const age = 18 + (i % 30);
-    let category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : age <= 45 ? "Aunty" : "Other";
+    const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : age <= 45 ? "Aunty" : "Other";
     const subCategory = subCategories.sort(() => 0.5 - Math.random()).slice(0, 2).join(", ");
     const user = {
       id: i,
@@ -46,7 +53,7 @@ function generateUsers(count) {
       description: sampleDescriptions[i % sampleDescriptions.length],
       rank: i,
       online: i % 2 === 0,
-      image: `images/user${i}.jpg`,
+      image: `images/user${(i % 10) + 1}.jpg`, // assume 10 sample images (looped)
       keywords: seoKeywords,
       topRated: i % 10 === 0,
       isNew: i > count - 10,
@@ -57,6 +64,7 @@ function generateUsers(count) {
     };
     users.push(user);
   }
+
   localStorage.setItem("galleryUsers", JSON.stringify(users));
 }
 
@@ -112,12 +120,6 @@ function renderUsers() {
   });
 }
 
-// ⬇️ Pagination + Filters + Utilities (same as before)
-function applyFilters() { /* ... */ }
-function clearFilters() { /* ... */ }
-function sortUsers() { /* ... */ }
-function changePage(page) { /* ... */ }
-function setupPagination() { /* ... */ }
 function toggleTheme() {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode");
@@ -125,46 +127,60 @@ function toggleTheme() {
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 }
 
-function showMessage(text) { /* ... */ }
+function showMessage(text) {
+  const popup = document.getElementById("messagePopup");
+  const popupText = document.getElementById("popupText");
+  popupText.innerText = text;
+  popup.classList.remove("hidden");
+  setTimeout(() => popup.classList.add("hidden"), 2000);
+}
 
+function applyFilters() {
+  // Simplified filter example
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  filteredUsers = users.filter(u =>
+    u.name.toLowerCase().includes(search)
+  );
+  currentPage = 1;
+  renderUsers();
+}
+
+function clearFilters() {
+  document.getElementById("searchInput").value = "";
+  filteredUsers = [...users];
+  currentPage = 1;
+  renderUsers();
+}
+
+function sortUsers() {
+  const sortValue = document.getElementById("sortBy").value;
+  filteredUsers.sort((a, b) => {
+    if (sortValue === "name") return a.name.localeCompare(b.name);
+    if (sortValue === "age") return a.age - b.age;
+    if (sortValue === "rank") return a.rank - b.rank;
+    if (sortValue === "location") return a.location.localeCompare(b.location);
+    return 0;
+  });
+  renderUsers();
+}
+
+function changePage(page) {
+  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
+  if (page < 1 || page > maxPage) return;
+  currentPage = page;
+  renderUsers();
+}
+
+function setupPagination() {
+  // Already handled by prev/next button events
+}
+
+// Dark mode on load
 window.onload = function () {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
+    document.body.classList.remove("light-mode");
     document.body.classList.add("dark-mode");
     isDarkMode = true;
   }
 };
-
-// 🏷️ Filter chips logic (same as before)
-["categorySelect", "subCategorySelect", "areaSelect", "ageSelect", "topRatedSelect"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener("change", applyFilters);
-});
-
-const originalApplyFilters = applyFilters;
-applyFilters = function () {
-  originalApplyFilters();
-  displayActiveTags();
-};
-
-function displayActiveTags() {
-  const tagContainer = document.getElementById("activeTags");
-  if (!tagContainer) return;
-  tagContainer.innerHTML = "";
-  const tagData = {
-    categorySelect: "Category",
-    subCategorySelect: "Sub-category",
-    areaSelect: "Area",
-    ageSelect: "Age",
-    topRatedSelect: "Top Rated"
-  };
-  Object.keys(tagData).forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.value) {
-      const tag = document.createElement("span");
-      tag.className = "filter-chip";
-      tag.innerText = `${tagData[id]}: ${el.options[el.selectedIndex].text}`;
-      tagContainer.appendChild(tag);
-    }
-  });
-}
