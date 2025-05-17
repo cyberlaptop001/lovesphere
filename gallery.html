@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/gallery.css" />
 </head>
 <body class="light-mode">
+  <!-- 🔝 Top Menu -->
   <div class="top-menu">
     <div class="logo">LoveSphere</div>
     <nav>
@@ -17,19 +18,62 @@
     <button id="themeToggle" class="glow-button small">Toggle Theme</button>
   </div>
 
+  <!-- 🔍 Filter/Search Bar -->
   <div id="filterBar">
     <input type="text" id="searchInput" placeholder="Search by name..." />
-    <button id="filterBtn">Filter</button>
-    <button id="clearFilterBtn">Clear</button>
+    <input type="text" id="filterLocation" placeholder="Location" />
+    <input type="text" id="filterServices" placeholder="Services" />
+    <input type="number" id="minAge" placeholder="Min Age" />
+    <input type="number" id="maxAge" placeholder="Max Age" />
+    <select id="sortBy">
+      <option value="">Sort By</option>
+      <option value="age">Age</option>
+      <option value="rank">Rank</option>
+      <option value="name">Name</option>
+      <option value="location">Location</option>
+    </select>
+    <br />
+    <button id="filterBtn" class="glow-button">Apply Filters</button>
+    <button id="clearFilterBtn" class="glow-button">Clear Filters</button>
   </div>
 
-  <div id="resultCount">Total Results: 0</div>
-  <div id="userCards" class="user-container"></div>
+  <!-- 🎥 Background Video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="videos/bg.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
+  <!-- 📊 Result Count -->
+  <div id="resultCount">Total Results: 0</div>
+
+  <!-- 👤 User Cards -->
+  <div class="user-container" id="userCards"></div>
+
+  <!-- 🔄 Pagination -->
   <div class="pagination">
-    <button id="prevPage">Prev</button>
+    <button id="prevPage" class="glow-button small">Prev</button>
     <span id="pageNumber">Page 1</span>
-    <button id="nextPage">Next</button>
+    <button id="nextPage" class="glow-button small">Next</button>
+  </div>
+
+  <!-- 🔝 Back to Top -->
+  <button id="backToTop" class="glow-button small" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Back to Top</button>
+
+  <!-- 💬 Popup -->
+  <div id="messagePopup" class="popup hidden">
+    <span id="popupText">Message</span>
+  </div>
+
+  <!-- ⭐ SEO Block -->
+  <div class="seo-banner">
+    <h2>Top Call Girls & Escort Service in Lucknow</h2>
+    <p>Find high-profile, verified independent call girls, college girls, and bhabhi in Charbagh, Aliganj, Gomtinagar, and more.</p>
+  </div>
+
+  <!-- 🦶 Footer -->
+  <div class="footer">
+    <a href="#">© 2025 LoveSphere</a>
+    <a href="seo.html">Policy & Guidelines</a>
   </div>
 
   <script src="js/gallery.js"></script>
