@@ -23,9 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 🧠 Generate Dummy Users
 function generateUsers(count) {
-  const names = Array.from({ length: count }, (_, i) => `User ${i + 1}`);
+  const names = [
+    "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
+    "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
+  ];
+
   const sampleServices = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
-  const sampleLocations = ["Lucknow", "Delhi", "Mumbai", "Bangalore", "Jaipur"];
   const sampleDescriptions = [
     "Charming, bubbly personality.",
     "Elite, elegant and educated.",
@@ -34,34 +37,48 @@ function generateUsers(count) {
     "Smart, witty, and independent.",
     "Energetic and open-minded."
   ];
+
+  const sampleLocations = [
+    "Charbagh", "Aliganj", "Munsi Puliya", "Chinhat", "BBD City", "Lucknow University",
+    "Indira Nagar", "Mahanagar", "Ashiyana", "Matiyari"
+  ];
+
   const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
   const seoKeywords = `Lucknow escorts, Call girls in Lucknow, Escort services Lucknow`;
 
-  for (let i = 1; i <= count; i++) {
+  for (let i = 0; i < count; i++) {
     const age = 18 + (i % 30);
-    const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : age <= 45 ? "Aunty" : "Other";
-    const subCategory = subCategories.sort(() => 0.5 - Math.random()).slice(0, 2).join(", ");
+    const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : "Aunty";
+    const subCategory = subCategories[Math.floor(Math.random() * subCategories.length)];
+    const name = names[i % names.length];
+    const location = sampleLocations[i % sampleLocations.length];
+    const description = sampleDescriptions[i % sampleDescriptions.length];
+
     const user = {
-      id: i,
-      name: names[i - 1],
+      id: i + 1,
+      name,
       age,
       height: 150 + (i % 50),
       category,
       subCategory,
       services: [sampleServices[i % sampleServices.length]],
-      location: sampleLocations[i % sampleLocations.length],
-      description: sampleDescriptions[i % sampleDescriptions.length],
-      rank: i,
+      location,
+      description,
+      rank: i + 1,
       online: i % 2 === 0,
-      image: `images/user${(i % 10) + 1}.jpg`, // assume 10 sample images (looped)
+      image: `images/user${(i % 10) + 1}.jpg`,
       keywords: seoKeywords,
       topRated: i % 10 === 0,
       isNew: i > count - 10,
       verified: true,
       mobileNumbers: [
-        { number: `82996705${String(i).padStart(2, '0')}`, type: i % 2 === 0 ? "call" : "chat" }
+        {
+          number: `82996705${String(i + 1).padStart(2, '0')}`,
+          type: i % 2 === 0 ? "call" : "chat"
+        }
       ]
     };
+
     users.push(user);
   }
 
