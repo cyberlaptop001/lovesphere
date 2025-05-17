@@ -1,0 +1,169 @@
+/* admin.css - Final Neon UI */
+
+body {
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 30px 15px;
+    text-align: center;
+  }
+  
+  h1, h2, h3 {
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff;
+  }
+  
+  input, textarea, button, select {
+    margin: 8px;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    background: #111;
+    color: #0ff;
+    border: 1px solid #0ff;
+    box-shadow: 0 0 6px #0ff;
+    width: 240px;
+    max-width: 100%;
+  }
+  
+  button {
+    background: #00ffff;
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  
+  .tab-menu {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .tab-link {
+    padding: 10px 20px;
+    background-color: #ff00ff;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ff00ff;
+  }
+  
+  .tab-section {
+    margin: 30px auto;
+    max-width: 900px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #0ff;
+  }
+  
+  #userDetails {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+  }
+  
+  img {
+    border-radius: 10px;
+  }
+  
+  table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 15px #0ff;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  table th, table td {
+    padding: 10px;
+    border: 1px solid #0ff;
+    color: white;
+    text-align: center;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .edit-btn, .delete-btn {
+    margin: 4px;
+    background: #ff69b4;
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    box-shadow: 0 0 8px #ff69b4;
+  }
+  
+  .edit-btn:hover, .delete-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+  
+  /* Admin update box and banner */
+  .update-box {
+    background: rgba(0, 0, 0, 0.6);
+    border-left: 4px solid #0ff;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff;
+    max-width: 800px;
+    text-align: left;
+  }
+  
+  /* Bulk mobile number box */
+  .bulk-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #0ff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #0ff;
+    text-align: center;
+  }
+  #mobileNumbersList li {
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  #mobileNumbersList button {
+    cursor: pointer;
+    background: #ff4081;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+  }
+  
+  #mobileNumbersList button:hover {
+    background: #e040fb;
+  }
+  
