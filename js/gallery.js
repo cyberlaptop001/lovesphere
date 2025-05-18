@@ -1,39 +1,24 @@
-// gallery.js - Fully Updated with User Rendering, Filters, Theme, and Pagination
-
 const usersPerPage = 12;
 let currentPage = 1;
 let users = [];
 let filteredUsers = [];
-let isDarkMode = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+// Load and initialize
+window.onload = () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") document.body.classList.add("dark-mode");
+
   users = JSON.parse(localStorage.getItem("galleryUsers")) || [];
   if (users.length === 0) {
     generateUsers(100);
     users = JSON.parse(localStorage.getItem("galleryUsers"));
   }
-
   filteredUsers = [...users];
   renderUsers();
-  setupPagination();
-
-  document.getElementById("filterBtn").addEventListener("click", applyFilters);
-  document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
-  document.getElementById("sortBy").addEventListener("change", sortUsers);
-  document.getElementById("themeToggle").addEventListener("click", toggleTheme);
-  document.getElementById("prevPage").addEventListener("click", () => changePage(currentPage - 1));
-  document.getElementById("nextPage").addEventListener("click", () => changePage(currentPage + 1));
-
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.classList.remove("light-mode");
-    document.body.classList.add("dark-mode");
-    isDarkMode = true;
-  }
-});
+  setupEvents();
+};
 
 function generateUsers(count) {
-  const names = ["Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali", "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"];
   const categories = ["College Girl", "Bhabhi", "Aunty"];
   const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
   const descriptions = [
@@ -44,56 +29,49 @@ function generateUsers(count) {
     "GFE, dance shows, strip tease, foreplay master, creamy touch, full romance"
   ];
   const locations = [
-    "Charbagh, Lucknow", "Aliganj, Lucknow", "Gomtinagar, Lucknow", "Chinhat, Lucknow",
-    "Naka, Lucknow", "Alambagh, Lucknow", "Para, Lucknow", "Ashiyana, Lucknow",
-    "Indiranagar, Lucknow", "Mahanagar, Lucknow", "Kaisharbagh, Lucknow", "BBD City, Lucknow",
-    "Lucknow University City", "Matiyari, Lucknow"
+    "Charbagh", "Aliganj", "Gomtinagar", "Chinhat", "Naka", "Alambagh", "Para", "Ashiyana",
+    "Indiranagar", "Mahanagar", "Kaisharbagh", "BBD City", "Lucknow University", "Matiyari"
   ];
-  const services = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
 
-  const data = [];
+  const names = ["Priya", "Sonam", "Riya", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya"];
+  const generated = [];
+
   for (let i = 0; i < count; i++) {
-    const user = {
+    generated.push({
       id: i + 1,
       name: names[i % names.length],
       age: 18 + (i % 15),
-      height: 150 + (i % 20),
-      category: categories[i % categories.length],
-      subCategory: subCategories[i % subCategories.length],
+      height: 150 + (i % 30),
       location: locations[i % locations.length],
       description: descriptions[i % descriptions.length],
-      services: [services[i % services.length]],
+      category: categories[i % categories.length],
+      subCategory: subCategories[i % subCategories.length],
       image: `images/user${(i % 10) + 1}.jpg`,
       topRated: i % 5 === 0,
       verified: true,
       online: i % 2 === 0,
       rank: i + 1,
       mobileNumbers: [
-        { number: `82996705${String(i + 1).padStart(2, '0')}`, type: "call" },
-        { number: `82996705${String(i + 1).padStart(2, '0')}`, type: "chat" }
+        { number: `82996705${String(i).padStart(2, '0')}`, type: "call" },
+        { number: `82996705${String(i).padStart(2, '0')}`, type: "chat" }
       ]
-    };
-    data.push(user);
+    });
   }
-  localStorage.setItem("galleryUsers", JSON.stringify(data));
+
+  localStorage.setItem("galleryUsers", JSON.stringify(generated));
 }
 
 function renderUsers() {
   const container = document.getElementById("userCards");
-  const resultCount = document.getElementById("resultCount");
   const startIndex = (currentPage - 1) * usersPerPage;
   const pagedUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
-
-  container.innerHTML = "";
-  resultCount.textContent = `Total Results: ${filteredUsers.length}`;
+  document.getElementById("resultCount").textContent = `Total Results: ${filteredUsers.length}`;
   document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+  container.innerHTML = "";
 
   pagedUsers.forEach(user => {
-    const callNum = user.mobileNumbers?.find(m => m.type === "call")?.number || "";
-    const chatNum = user.mobileNumbers?.find(m => m.type === "chat")?.number || "";
     const card = document.createElement("div");
     card.className = "user-card";
-
     card.innerHTML = `
       <div class="status-indicator ${user.online ? 'online' : 'offline'}"></div>
       <div class="user-card-layout">
@@ -101,8 +79,8 @@ function renderUsers() {
           <img src="${user.image}" alt="${user.name}" class="user-img">
         </div>
         <div class="user-info">
-          ${user.topRated ? '<div class="badge top-rated">Top Rated</div>' : ''}
-          ${user.verified ? '<div class="verified-badge">✔ Verified</div>' : ''}
+          ${user.topRated ? '<p class="badge top-rated">Top Rated</p>' : ''}
+          ${user.verified ? '<span class="verified-badge">✔ Verified</span>' : ''}
           <p><strong>Name:</strong> ${user.name}</p>
           <p><strong>Age:</strong> ${user.age} | <strong>Height:</strong> ${user.height} cm</p>
           <p><strong>Category:</strong> ${user.category}</p>
@@ -111,16 +89,23 @@ function renderUsers() {
           <p><strong>Description:</strong> ${user.description}</p>
           <p><strong>Rank:</strong> ${user.rank}</p>
           <div class="card-buttons">
-            <a href="tel:${callNum}" class="btn call-btn">📞 Call Me</a>
-            <a href="https://wa.me/${chatNum}" target="_blank" class="btn chat-btn">💬 Chat Me</a>
-            <button class="btn fav-btn" onclick="showMessage('Favorited ${user.name}')">❤️ Like</button>
+            <a href="tel:${user.mobileNumbers[0].number}" class="btn call-btn">📞 Call Me</a>
+            <a href="https://wa.me/${user.mobileNumbers[1].number}" target="_blank" class="btn chat-btn">💬 Chat Me</a>
+            <button class="btn fav-btn" data-name="${user.name}">❤️ Like</button>
           </div>
         </div>
       </div>
     `;
-
+    card.querySelector(".fav-btn").addEventListener("click", () => showMessage(`Liked ${user.name}`));
     container.appendChild(card);
   });
+}
+
+function showMessage(text) {
+  const popup = document.getElementById("messagePopup");
+  document.getElementById("popupText").innerText = text;
+  popup.classList.remove("hidden");
+  setTimeout(() => popup.classList.add("hidden"), 2000);
 }
 
 function applyFilters() {
@@ -141,23 +126,10 @@ function applyFilters() {
 function clearFilters() {
   document.getElementById("searchInput").value = "";
   document.getElementById("filterLocation").value = "";
-  document.getElementById("filterServices").value = "";
   document.getElementById("minAge").value = "";
   document.getElementById("maxAge").value = "";
   filteredUsers = [...users];
   currentPage = 1;
-  renderUsers();
-}
-
-function sortUsers() {
-  const sortValue = document.getElementById("sortBy").value;
-  filteredUsers.sort((a, b) => {
-    if (sortValue === "name") return a.name.localeCompare(b.name);
-    if (sortValue === "age") return a.age - b.age;
-    if (sortValue === "rank") return a.rank - b.rank;
-    if (sortValue === "location") return a.location.localeCompare(b.location);
-    return 0;
-  });
   renderUsers();
 }
 
@@ -168,21 +140,18 @@ function changePage(page) {
   renderUsers();
 }
 
-function setupPagination() {
-  // Handled by prev/next buttons
-}
-
 function toggleTheme() {
-  isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode");
   document.body.classList.toggle("light-mode");
-  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
 }
 
-function showMessage(msg) {
-  const popup = document.getElementById("messagePopup");
-  const popupText = document.getElementById("popupText");
-  popupText.innerText = msg;
-  popup.classList.remove("hidden");
-  setTimeout(() => popup.classList.add("hidden"), 2000);
+function setupEvents() {
+  document.getElementById("filterBtn").onclick = applyFilters;
+  document.getElementById("clearFilterBtn").onclick = clearFilters;
+  document.getElementById("themeToggle").onclick = toggleTheme;
+  document.getElementById("prevPage").onclick = () => changePage(currentPage - 1);
+  document.getElementById("nextPage").onclick = () => changePage(currentPage + 1);
+  document.getElementById("backToTop").onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 }
