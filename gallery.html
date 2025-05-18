@@ -8,29 +8,29 @@
 </head>
 <body class="dark-mode">
 
-  <!-- 🔮 Background Video -->
+  <!-- 🔮 Background Video (behind everything) -->
   <div class="video-background">
     <video autoplay muted loop id="bgVideo">
       <source src="media/bg.mp4" type="video/mp4" />
     </video>
   </div>
 
-  <!-- 🔝 Back to Top -->
-  <button id="backToTop">↑ BACK TO TOP</button>
+  <!-- 🔝 Back to Top Button -->
+  <button id="backToTop" class="neon-button">↑ BACK TO TOP</button>
 
   <!-- 🌟 Top Menu -->
   <header class="top-menu">
-    <div class="logo">LoveSphere</div>
+    <div class="logo neon-text">Love<span class="neon-pink">Sphere</span></div>
     <nav>
       <a href="index.html">Home</a>
       <a href="gallery.html">Gallery</a>
       <a href="#">Policy & Guidelines</a>
     </nav>
-    <button id="themeToggle" class="glow-button small">Toggle Theme</button>
+    <button id="themeToggle" class="neon-button">Toggle Theme</button>
   </header>
 
   <!-- 🔍 Filter Bar -->
-  <div id="filterBar">
+  <div id="filterBar" class="category-filter">
     <input type="text" id="searchInput" placeholder="Search by name..." />
     <input type="text" id="locationInput" placeholder="Location" />
     <input type="text" id="serviceInput" placeholder="Services" />
@@ -43,20 +43,21 @@
       <option value="rank">Rank</option>
       <option value="location">Location</option>
     </select>
-    <button id="filterBtn" class="glow-button small">Apply Filters</button>
-    <button id="clearFilterBtn" class="glow-button small">Clear Filters</button>
+    <button id="filterBtn" class="neon-button">Apply Filters</button>
+    <button id="clearFilterBtn" class="neon-button">Clear Filters</button>
   </div>
 
+  <!-- 🔢 Result Count -->
   <div id="resultCount"></div>
 
-  <!-- 👤 User Cards -->
+  <!-- 👤 User Cards Container -->
   <div class="user-container" id="userCards"></div>
 
-  <!-- 🔄 Pagination -->
+  <!-- 🔁 Pagination -->
   <div class="pagination">
-    <button id="prevPage" class="glow-button small">Previous</button>
+    <button id="prevPage" class="neon-button">Previous</button>
     <span id="pageNumber">Page 1</span>
-    <button id="nextPage" class="glow-button small">Next</button>
+    <button id="nextPage" class="neon-button">Next</button>
   </div>
 
   <!-- 🧠 SEO Content -->
@@ -86,9 +87,9 @@
     </div>
   </div>
 
-  <!-- 🦶 Footer -->
+  <!-- 🦶 Neon Footer -->
   <footer>
-    <p>&copy; 2025 LoveSphere. All Rights Reserved and Copyright Protected.</p>
+    <p>&copy; 2025 <span class="neon-text">LoveSphere</span>. All Rights Reserved and Copyright Protected.</p>
     <div class="seo-buttons">
       <button onclick="location.href='index.html'">SEO Page</button>
       <button onclick="location.href='gallery.html'">Gallery</button>
@@ -97,10 +98,10 @@
     </div>
   </footer>
 
-  <!-- 💬 Message Box -->
+  <!-- 💬 Message Popup -->
   <div class="popup hidden" id="messagePopup"><span id="popupText">Message</span></div>
 
-  <!-- 💡 Script -->
+  <!-- 💡 Scripts -->
   <script src="gallery.js"></script>
 </body>
 </html>
