@@ -1,13 +1,23 @@
-/* ===============================
-   Global Styles
-=============================== */
+/* gallery.css - Fully Updated with Neon Style Matching Homepage */
+
+/* 🎨 Basic Theme Variables */
+body.light-mode {
+  --bg-color: #fff;
+  --text-color: #000;
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #fff;
+}
+
+/* 🌐 Global Styles */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
 }
 
 a {
@@ -15,19 +25,13 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #ff00ff;
-}
-
-/* ===============================
-   Video Background
-=============================== */
+/* 🌌 Background Video */
 #bg-video {
   position: fixed;
   top: 0;
   left: 0;
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
   z-index: -1;
 }
@@ -43,34 +47,34 @@ body::before {
   z-index: 0;
 }
 
-/* ===============================
-   Top Menu
-=============================== */
+/* 💫 Top Menu */
 .top-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
   background: rgba(0, 0, 0, 0.7);
+  padding: 1rem 2rem;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10;
+  backdrop-filter: blur(5px);
 }
 
 .top-menu .logo {
   font-size: 2rem;
   font-weight: bold;
-  color: #ff00ff;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
 }
 
 .top-menu nav a {
   margin: 0 1rem;
   font-weight: bold;
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
 }
 
-/* ===============================
-   Glow Button
-=============================== */
+/* ✨ Glow Button */
 .glow-button {
   background-color: #0ff;
   color: #000;
@@ -88,57 +92,89 @@ body::before {
   box-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
 }
 
-/* ===============================
-   Filter Bar
-=============================== */
+.glow-button.small {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
+
+/* 🔍 Filter/Search Bar */
 #filterBar {
-  text-align: center;
   padding: 1rem;
+  text-align: center;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
-  z-index: 10;
+  margin-top: 10px;
 }
 
 #filterBar input,
 #filterBar select {
-  margin: 0.5rem;
+  margin: 0.3rem;
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  min-width: 140px;
 }
 
-/* ===============================
-   User Cards
-=============================== */
-.user-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  gap: 2rem;
-}
-
-.user-card {
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  padding: 20px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 1000px;
-  box-shadow: 0 0 15px #0ff, 0 0 30px #ff00ff;
-  position: relative;
+/* 📊 Result Counter */
+#resultCount {
+  text-align: center;
+  margin: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #fff;
 }
 
-.user-card img {
-  width: 200px;
-  height: 250px;
-  object-fit: cover;
+/* 👤 User Container & Card Layout */
+.user-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  align-items: center;
+}
+
+.user-card {
+  display: flex;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 900px;
+  width: 90%;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+  position: relative;
+  gap: 20px;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px #00ff00, 0 0 40px #ff00ff;
+}
+
+.user-image-container {
+  flex: 0 0 200px;
+  height: 260px;
+  overflow: hidden;
   border-radius: 12px;
   border: 3px solid #ff00ff;
+  box-shadow: 0 0 15px #ff00ff;
+}
+
+.user-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+.user-info p {
+  margin: 5px 0;
+  color: #ff69b4;
+}
+
+.user-info p strong {
+  color: #00ff00;
 }
 
 .verified-badge {
@@ -148,151 +184,146 @@ body::before {
   background-color: gold;
   color: black;
   font-weight: bold;
-  font-size: 12px;
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 15px;
   box-shadow: 0 0 10px gold;
   animation: pulse 2s infinite;
 }
 
-.user-info {
-  flex: 1;
+.status-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  border: 2px solid #fff;
+  box-shadow: 0 0 6px #000;
 }
 
-.user-info p {
-  margin: 6px 0;
-  font-size: 15px;
-  color: #ff69b4;
+.status-indicator.online {
+  background-color: #00ff00;
 }
 
-.user-info p strong {
-  color: #00ff00;
+.status-indicator.offline {
+  background-color: #ff0000;
 }
 
+/* 💬 Action Buttons (Call / Chat / Like) */
 .card-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 1rem;
+  margin-top: 15px;
 }
 
-.card-buttons a,
-.card-buttons button {
-  padding: 10px 16px;
+.call-btn, .chat-btn, .fav-btn {
+  background-color: transparent;
+  border: 2px solid #00e6e6;
+  color: #00e6e6;
+  padding: 10px 20px;
   font-size: 14px;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 20px;
   cursor: pointer;
-  border: none;
-  color: white;
-  transition: 0.3s;
-  text-shadow: 0 0 4px #fff;
+  transition: all 0.3s;
 }
 
-.call-btn {
-  background-color: #ff0055;
-  box-shadow: 0 0 10px #ff0055;
+.call-btn:hover, .chat-btn:hover, .fav-btn:hover {
+  background-color: #00e6e6;
+  color: #000;
+  box-shadow: 0 0 20px #00e6e6;
 }
 
-.chat-btn {
-  background-color: #00bfff;
-  box-shadow: 0 0 10px #00bfff;
-}
-
-.fav-btn {
-  background-color: #ff00ff;
-  box-shadow: 0 0 10px #ff00ff;
-}
-
-/* ===============================
-   Pagination
-=============================== */
+/* 🔄 Pagination */
 .pagination {
   text-align: center;
-  margin: 2rem;
+  margin: 2rem 0;
 }
 
 .pagination button {
-  padding: 10px 20px;
   margin: 0 10px;
-  border-radius: 10px;
-  background: #0ff;
-  color: #000;
-  font-weight: bold;
-  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 2px solid #0ff;
+  background-color: transparent;
+  color: #0ff;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #0ff;
+  color: #000;
+  box-shadow: 0 0 20px #0ff;
+}
+
+/* 🔝 Back to Top */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none;
+}
+
+/* 💬 Message Popup */
+.popup {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  background-color: rgba(0, 255, 255, 0.9);
+  color: black;
+  padding: 1rem;
+  border-radius: 10px;
   box-shadow: 0 0 10px #0ff;
 }
 
-/* ===============================
-   Footer
-=============================== */
+.popup.hidden {
+  display: none;
+}
+
+/* 🦶 Footer */
 .footer {
-  background-color: #1e2a38;
-  padding: 20px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
   color: #fff;
-  margin-top: 4rem;
+  font-size: 14px;
 }
 
 .footer a {
-  margin: 0 10px;
-  color: #0ff;
+  margin: 0 1rem;
+  color: #00e6e6;
   font-weight: bold;
 }
 
-.footer a:hover {
-  color: #ff00ff;
-}
-
-/* ===============================
-   SEO Banner
-=============================== */
-.seo-banner {
-  margin: 3rem auto;
-  padding: 2rem;
-  text-align: center;
-  max-width: 1000px;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  color: #fff;
-  box-shadow: 0 0 15px #0ff, 0 0 25px #ff00ff;
-}
-
-.seo-banner h2 {
-  color: #00ffff;
-  font-size: 24px;
-  text-shadow: 0 0 10px #00ffff;
-}
-
-/* ===============================
-   Utility Animations
-=============================== */
+/* 🌟 Animations */
 @keyframes pulse {
   0% { box-shadow: 0 0 5px gold; }
   50% { box-shadow: 0 0 15px gold; }
   100% { box-shadow: 0 0 5px gold; }
 }
 
-/* ===============================
-   Responsive
-=============================== */
+/* 📱 Responsive Design */
 @media screen and (max-width: 768px) {
   .user-card {
     flex-direction: column;
-    align-items: center;
+    text-align: center;
   }
-
-  .user-card img {
-    width: 100%;
-    height: auto;
+  .user-image-container {
+    margin: auto;
   }
-
   .card-buttons {
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
   }
-
   .top-menu {
     flex-direction: column;
+  }
+  .top-menu nav {
+    margin-top: 1rem;
   }
 }
