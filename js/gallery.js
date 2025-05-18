@@ -6,10 +6,11 @@ let isDarkMode = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   users = JSON.parse(localStorage.getItem("galleryUsers")) || [];
-if (users.length === 0) {
-  generateUsers(100);
-  users = JSON.parse(localStorage.getItem("galleryUsers")); // ✅ Add this
-}
+
+  if (users.length === 0) {
+    generateUsers(100);
+    users = JSON.parse(localStorage.getItem("galleryUsers")); // 🔥 critical!
+  }
 
   filteredUsers = [...users];
   renderUsers();
@@ -23,14 +24,12 @@ if (users.length === 0) {
   document.getElementById("nextPage").addEventListener("click", () => changePage(currentPage + 1));
 });
 
-// 🧠 Generate Dummy Users
+// ✅ Generate Dummy Users
 function generateUsers(count) {
- const names = [
-  "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
-  "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
-];
-
-
+  const names = [
+    "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
+    "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
+  ];
   const sampleServices = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
   const sampleDescriptions = [
     "Charming, bubbly personality.",
@@ -40,34 +39,29 @@ function generateUsers(count) {
     "Smart, witty, and independent.",
     "Energetic and open-minded."
   ];
-
   const sampleLocations = [
     "Charbagh", "Aliganj", "Munsi Puliya", "Chinhat", "BBD City", "Lucknow University",
     "Indira Nagar", "Mahanagar", "Ashiyana", "Matiyari"
   ];
-
   const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
   const seoKeywords = `Lucknow escorts, Call girls in Lucknow, Escort services Lucknow`;
+
+  const generated = [];
 
   for (let i = 0; i < count; i++) {
     const age = 18 + (i % 30);
     const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : "Aunty";
-    const subCategory = subCategories[Math.floor(Math.random() * subCategories.length)];
-    const name = names[i % names.length];
-const location = sampleLocations[i % sampleLocations.length];
-const description = sampleDescriptions[i % sampleDescriptions.length];
-
 
     const user = {
       id: i + 1,
-      name,
-      age,
+      name: names[i % names.length],
+      age: age,
       height: 150 + (i % 50),
       category,
-      subCategory,
+      subCategory: subCategories[i % subCategories.length],
       services: [sampleServices[i % sampleServices.length]],
-      location,
-      description,
+      location: sampleLocations[i % sampleLocations.length],
+      description: sampleDescriptions[i % sampleDescriptions.length],
       rank: i + 1,
       online: i % 2 === 0,
       image: `images/user${(i % 10) + 1}.jpg`,
@@ -76,20 +70,18 @@ const description = sampleDescriptions[i % sampleDescriptions.length];
       isNew: i > count - 10,
       verified: true,
       mobileNumbers: [
-        {
-          number: `82996705${String(i + 1).padStart(2, '0')}`,
-          type: i % 2 === 0 ? "call" : "chat"
-        }
+        { number: `82996705${String(i + 1).padStart(2, '0')}`, type: "call" },
+        { number: `82996705${String(i + 1).padStart(2, '0')}`, type: "chat" }
       ]
     };
 
-    users.push(user);
+    generated.push(user);
   }
 
-  localStorage.setItem("galleryUsers", JSON.stringify(users));
+  localStorage.setItem("galleryUsers", JSON.stringify(generated));
 }
 
-
+// ✅ Render User Cards
 function renderUsers() {
   const startIndex = (currentPage - 1) * usersPerPage;
   const usersToShow = filteredUsers.slice(startIndex, startIndex + usersPerPage);
@@ -127,21 +119,21 @@ function renderUsers() {
           <div class="card-buttons">
             <a href="tel:${callNumber}" class="btn call-btn">Call Me</a>
             <a href="https://wa.me/${chatNumber}" target="_blank" class="btn chat-btn">Chat Me</a>
-            <button class="btn fav-btn">Favorited ❤️</button>
+            <button class="btn fav-btn">❤️ Like</button>
           </div>
         </div>
       </div>
-      <div style="display:none">${user.keywords}</div>
     `;
 
     card.querySelector(".fav-btn").addEventListener("click", () =>
-      showMessage(`Favorited ${user.name}`)
+      showMessage(`Liked ${user.name}`)
     );
 
     container.appendChild(card);
   });
 }
 
+// ✅ Theme Toggle
 function toggleTheme() {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode");
@@ -149,6 +141,7 @@ function toggleTheme() {
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 }
 
+// ✅ Popup Message
 function showMessage(text) {
   const popup = document.getElementById("messagePopup");
   const popupText = document.getElementById("popupText");
@@ -157,8 +150,8 @@ function showMessage(text) {
   setTimeout(() => popup.classList.add("hidden"), 2000);
 }
 
+// ✅ Filters
 function applyFilters() {
-  // Simplified filter example
   const search = document.getElementById("searchInput").value.toLowerCase();
   filteredUsers = users.filter(u =>
     u.name.toLowerCase().includes(search)
@@ -174,6 +167,7 @@ function clearFilters() {
   renderUsers();
 }
 
+// ✅ Sorting
 function sortUsers() {
   const sortValue = document.getElementById("sortBy").value;
   filteredUsers.sort((a, b) => {
@@ -186,6 +180,7 @@ function sortUsers() {
   renderUsers();
 }
 
+// ✅ Pagination
 function changePage(page) {
   const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
   if (page < 1 || page > maxPage) return;
@@ -197,7 +192,7 @@ function setupPagination() {
   // Already handled by prev/next button events
 }
 
-// Dark mode on load
+// ✅ Load dark mode on startup
 window.onload = function () {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
