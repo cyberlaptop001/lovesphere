@@ -2,84 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery - LoveSphere</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <style>
-    html { scroll-behavior: smooth; }
-    #backToTop { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | LoveSphere</title>
+  <link rel="stylesheet" href="gallery.css" />
 </head>
-<body class="light-mode">
+<body class="dark-mode">
 
-  <!-- Background Video -->
+  <!-- 🔮 Background Video -->
   <div class="video-background">
-    <video autoplay muted loop>
-      <source src="../videos/video-blog.mp4" type="video/mp4" />
+    <video autoplay muted loop id="bgVideo">
+      <source src="media/bg.mp4" type="video/mp4" />
     </video>
   </div>
 
-  <!-- Header -->
-  <div class="header-container">
-    <div class="header-logo"><span class="neon-text">Love</span><span class="neon-pink">Sphere</span></div>
-    <div class="nav-buttons">
-      <button onclick="window.location.href='index.html'" class="neon-button">Home</button>
-      <button onclick="window.location.href='gallery.html'" class="neon-button">Gallery</button>
-      <button onclick="window.location.href='seo.html'" class="neon-button">Policy & Guidelines</button>
-      <button onclick="window.location.href='admin.html'" class="neon-button">Admin Login</button>
-      <button id="themeToggle" class="neon-button">Toggle Theme</button>
-    </div>
+  <!-- 🔝 Back to Top -->
+  <button id="backToTop">↑ BACK TO TOP</button>
+
+  <!-- 🌟 Top Menu -->
+  <header class="top-menu">
+    <div class="logo">LoveSphere</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#">Policy & Guidelines</a>
+    </nav>
+    <button id="themeToggle" class="glow-button small">Toggle Theme</button>
+  </header>
+
+  <!-- 🔍 Filter Bar -->
+  <div id="filterBar">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+    <input type="text" id="locationInput" placeholder="Location" />
+    <input type="text" id="serviceInput" placeholder="Services" />
+    <input type="number" id="minAge" placeholder="Min Age" />
+    <input type="number" id="maxAge" placeholder="Max Age" />
+    <select id="sortBy">
+      <option value="">Sort By</option>
+      <option value="name">Name</option>
+      <option value="age">Age</option>
+      <option value="rank">Rank</option>
+      <option value="location">Location</option>
+    </select>
+    <button id="filterBtn" class="glow-button small">Apply Filters</button>
+    <button id="clearFilterBtn" class="glow-button small">Clear Filters</button>
   </div>
 
-  <div class="glow-banner">
-    100% Genuine &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Pay After Satisfaction &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 24x7 Services &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Anytime Call/Chat Help
-  </div>
+  <div id="resultCount"></div>
 
-  <!-- User Cards -->
-  <div class="user-container" id="userContainer"></div>
+  <!-- 👤 User Cards -->
+  <div class="user-container" id="userCards"></div>
 
-  <!-- Pagination -->
+  <!-- 🔄 Pagination -->
   <div class="pagination">
-    <button id="prevPage" class="neon-button">Prev</button>
+    <button id="prevPage" class="glow-button small">Previous</button>
     <span id="pageNumber">Page 1</span>
-    <button id="nextPage" class="neon-button">Next</button>
+    <button id="nextPage" class="glow-button small">Next</button>
   </div>
 
-  <button id="backToTop" class="neon-button">⬆ BACK TO TOP</button>
-
-  <!-- SEO Section -->
-  <section class="info-boxes">
+  <!-- 🧠 SEO Content -->
+  <div class="info-boxes">
     <div class="neon-box">
       <h2>Top Escorts and Call Girls in Lucknow</h2>
-      <p>LoveSphere connects you with <span class="highlight">premium call girls in Lucknow</span>, including <span class="highlight">Charbagh escorts</span>, <span class="highlight">Aliganj companions</span>, and <span class="highlight">Gomtinagar escort girls</span>. Our <span class="highlight">independent Lucknow escorts</span> offer services ranging from <em>private companionship</em> to <em>24/7 full satisfaction</em>.</p>
-      <p>Whether you're looking for <span class="highlight">college girls</span>, <span class="highlight">bhabhi escorts</span>, or <span class="highlight">aunty models</span>, LoveSphere lists the best <span class="highlight">female escort services in Lucknow</span>. Available now in <span class="highlight">Chinhat</span>, <span class="highlight">Para</span>, <span class="highlight">Ashiyana</span>, <span class="highlight">Indiranagar</span>, <span class="highlight">Kaisharbagh</span>, and more.</p>
-      <p><strong><span class="highlight">Book trusted, verified escorts in Lucknow</span></strong> with just one click. Enjoy services like <span class="highlight">happy endings</span>, <span class="highlight">custom role-play</span>, and <span class="highlight">VIP escort experiences</span> across the city.</p>
+      <p>
+        LoveSphere connects you with <span class="highlight">premium call girls in Lucknow</span>, including <strong>Charbagh escorts</strong>, <strong>Aliganj companions</strong>, and <strong>Gomtinagar escort girls</strong>.
+        Our <strong class="highlight">independent Lucknow escorts</strong> offer services ranging from <em>private companionship</em> to <em>24/7 full satisfaction</em>.
+      </p>
+      <p>
+        Whether you’re looking for <strong>college girls, bhabhi escorts, or aunty models</strong>, LoveSphere lists the best <strong>female escort services in Lucknow</strong>.
+        Available now in <strong>Chinhat, Para, Ashiyana, Indiranagar, Kaisharbagh</strong>, and more.
+      </p>
+      <p>
+        <strong class="highlight">Book trusted, verified escorts in Lucknow</strong> with just one click. Enjoy services like <em>happy endings, custom role-play</em>, and <strong>VIP escort experiences</strong> across the city.
+      </p>
     </div>
 
     <div class="neon-box admin-box">
-      <h2>📰 Admin Updates</h2>
-      <p>Important: <strong>Service will be temporarily unavailable tonight from 12:00 AM to 2:00 AM</strong> due to server maintenance.</p>
-      <p>🎉 New Models arriving this weekend in Charbagh and Gomtinagar! Check back for updated listings and premium services.</p>
-      <p>💡 Tip: Use filters to find your ideal companion faster based on age, height, and location.</p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 LoveSphere. All Rights Reserved and Copyright Protected.</p>
-    <a href="./seo.html" class="footer-link neon-button">SEO Page</a>
-    <a href="./gallery.html" class="footer-link neon-button">Gallery</a>
-    <a href="./privacy.html" class="footer-link neon-button">Privacy Policy</a>
-    <a href="./admin.html" class="footer-link neon-button">Admin Login</a>
-  </footer>
-
-  <div id="popupBox" class="popup-box hidden">
-    <div class="popup-content neon-box">
-      <span id="popupMessage"></span>
-      <button onclick="closePopup()" class="neon-button">Close</button>
+      <h2><i class="icon">📰</i> Admin Updates</h2>
+      <p><strong>Important:</strong> <span class="highlight">Service will be temporarily unavailable tonight from 12:00 AM to 2:00 AM</span> due to server maintenance.</p>
+      <ul>
+        <li>🟠 New Models arriving this weekend in Charbagh and Gomtinagar! Check back for updated listings and premium services.</li>
+        <li>🔔 Tip: Use filters to find your ideal companion faster based on age, height, and location.</li>
+      </ul>
     </div>
   </div>
 
-  <script src="../js/script.js"></script>
+  <!-- 🦶 Footer -->
+  <footer>
+    <p>&copy; 2025 LoveSphere. All Rights Reserved and Copyright Protected.</p>
+    <div class="seo-buttons">
+      <button onclick="location.href='index.html'">SEO Page</button>
+      <button onclick="location.href='gallery.html'">Gallery</button>
+      <button onclick="location.href='#'">Privacy Policy</button>
+      <button onclick="location.href='#'">Admin Login</button>
+    </div>
+  </footer>
+
+  <!-- 💬 Message Box -->
+  <div class="popup hidden" id="messagePopup"><span id="popupText">Message</span></div>
+
+  <!-- 💡 Script -->
+  <script src="gallery.js"></script>
 </body>
 </html>
