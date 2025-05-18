@@ -1,26 +1,33 @@
-const usersPerPage = 12;
+const usersPerPage = 15;
 let currentPage = 1;
 let users = [];
 let filteredUsers = [];
+let isDarkMode = false;
 
-// Load and initialize
-window.onload = () => {
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") document.body.classList.add("dark-mode");
-
-  users = JSON.parse(localStorage.getItem("galleryUsers")) || [];
-  if (users.length === 0) {
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUsers = JSON.parse(localStorage.getItem("galleryUsers")) || [];
+  if (savedUsers.length === 0) {
     generateUsers(100);
-    users = JSON.parse(localStorage.getItem("galleryUsers"));
+  } else {
+    users = savedUsers;
   }
+
   filteredUsers = [...users];
   renderUsers();
-  setupEvents();
-};
+  setupPagination();
 
+  document.getElementById("filterBtn").addEventListener("click", applyFilters);
+  document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
+  document.getElementById("sortBy").addEventListener("change", sortUsers);
+  document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+  document.getElementById("prevPage").addEventListener("click", () => changePage(currentPage - 1));
+  document.getElementById("nextPage").addEventListener("click", () => changePage(currentPage + 1));
+  document.getElementById("backToTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+});
+
+// 🌟 Generate Users
 function generateUsers(count) {
-  const categories = ["College Girl", "Bhabhi", "Aunty"];
-  const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
+  const names = ["Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali"];
   const descriptions = [
     "Happy endings, Role Play, Custom makeups, Hot dresses, full moanings",
     "Blowjob, Hairjob, All positions, Kamasutra Positions, Full satisfaction",
@@ -28,130 +35,168 @@ function generateUsers(count) {
     "Late night passion, body worship, full girlfriend vibe, wild experiments",
     "GFE, dance shows, strip tease, foreplay master, creamy touch, full romance"
   ];
+  const categories = ["College Girl", "Bhabhi", "Aunty"];
+  const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
   const locations = [
-    "Charbagh", "Aliganj", "Gomtinagar", "Chinhat", "Naka", "Alambagh", "Para", "Ashiyana",
-    "Indiranagar", "Mahanagar", "Kaisharbagh", "BBD City", "Lucknow University", "Matiyari"
+    "Charbagh, Lucknow", "Aliganj, Lucknow", "Gomtinagar, Lucknow", "Chinhat, Lucknow",
+    "Naka, Lucknow", "Alambagh, Lucknow", "Para, Lucknow", "Ashiyana, Lucknow",
+    "Indiranagar, Lucknow", "Mahanagar, Lucknow", "Kaisharbagh, Lucknow", "BBD City, Lucknow"
   ];
-
-  const names = ["Priya", "Sonam", "Riya", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya"];
-  const generated = [];
+  const services = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
+  const keywords = "Lucknow escorts, Call girls in Lucknow, Escort services Lucknow";
 
   for (let i = 0; i < count; i++) {
-    generated.push({
+    const age = 18 + (i % 30);
+    const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : "Aunty";
+    const name = names[i % names.length];
+    const description = descriptions[i % descriptions.length];
+    const subCategory = subCategories[i % subCategories.length];
+    const location = locations[i % locations.length];
+    const imgIndex = (i % 10) + 1;
+
+    users.push({
       id: i + 1,
-      name: names[i % names.length],
-      age: 18 + (i % 15),
-      height: 150 + (i % 30),
-      location: locations[i % locations.length],
-      description: descriptions[i % descriptions.length],
-      category: categories[i % categories.length],
-      subCategory: subCategories[i % subCategories.length],
-      image: `images/user${(i % 10) + 1}.jpg`,
-      topRated: i % 5 === 0,
-      verified: true,
-      online: i % 2 === 0,
+      name,
+      age,
+      height: 150 + (i % 50),
+      category,
+      subCategory,
+      services: [services[i % services.length]],
+      location,
+      description,
       rank: i + 1,
+      online: i % 2 === 0,
+      image: `images/user${imgIndex}.jpg`,
+      keywords,
+      topRated: i % 10 === 0,
+      isNew: i > count - 10,
+      verified: true,
       mobileNumbers: [
-        { number: `82996705${String(i).padStart(2, '0')}`, type: "call" },
-        { number: `82996705${String(i).padStart(2, '0')}`, type: "chat" }
+        {
+          number: `82996705${String(i + 1).padStart(2, '0')}`,
+          type: i % 2 === 0 ? "call" : "chat"
+        }
       ]
     });
   }
 
-  localStorage.setItem("galleryUsers", JSON.stringify(generated));
+  localStorage.setItem("galleryUsers", JSON.stringify(users));
 }
 
+// 🌟 Render User Cards
 function renderUsers() {
   const container = document.getElementById("userCards");
-  const startIndex = (currentPage - 1) * usersPerPage;
-  const pagedUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
-  document.getElementById("resultCount").textContent = `Total Results: ${filteredUsers.length}`;
-  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+  const resultCount = document.getElementById("resultCount");
   container.innerHTML = "";
 
-  pagedUsers.forEach(user => {
+  const start = (currentPage - 1) * usersPerPage;
+  const usersToShow = filteredUsers.slice(start, start + usersPerPage);
+
+  resultCount.innerText = `Total Results: ${filteredUsers.length}`;
+  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+
+  usersToShow.forEach(user => {
+    const callNum = user.mobileNumbers.find(n => n.type === "call" || n.type === "both")?.number || "";
+    const chatNum = user.mobileNumbers.find(n => n.type === "chat" || n.type === "both")?.number || "";
+
     const card = document.createElement("div");
     card.className = "user-card";
     card.innerHTML = `
-      <div class="status-indicator ${user.online ? 'online' : 'offline'}"></div>
-      <div class="user-card-layout">
-        <div class="user-image-container">
-          <img src="${user.image}" alt="${user.name}" class="user-img">
-        </div>
-        <div class="user-info">
-          ${user.topRated ? '<p class="badge top-rated">Top Rated</p>' : ''}
-          ${user.verified ? '<span class="verified-badge">✔ Verified</span>' : ''}
-          <p><strong>Name:</strong> ${user.name}</p>
-          <p><strong>Age:</strong> ${user.age} | <strong>Height:</strong> ${user.height} cm</p>
-          <p><strong>Category:</strong> ${user.category}</p>
-          <p><strong>Sub-Category:</strong> ${user.subCategory}</p>
-          <p><strong>Location:</strong> ${user.location}</p>
-          <p><strong>Description:</strong> ${user.description}</p>
-          <p><strong>Rank:</strong> ${user.rank}</p>
-          <div class="card-buttons">
-            <a href="tel:${user.mobileNumbers[0].number}" class="btn call-btn">📞 Call Me</a>
-            <a href="https://wa.me/${user.mobileNumbers[1].number}" target="_blank" class="btn chat-btn">💬 Chat Me</a>
-            <button class="btn fav-btn" data-name="${user.name}">❤️ Like</button>
-          </div>
+      <div class="user-image-container">
+        <img src="${user.image}" alt="${user.name}" class="user-img" />
+      </div>
+      <div class="user-info">
+        ${user.topRated ? `<span class="badge top-rated">Top Rated</span>` : ""}
+        ${user.verified ? `<span class="verified-badge">✔ Verified</span>` : ""}
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Age:</strong> ${user.age} | <strong>Height:</strong> ${user.height} cm</p>
+        <p><strong>Category:</strong> ${user.category}</p>
+        <p><strong>Sub-Category:</strong> ${user.subCategory}</p>
+        <p><strong>Location:</strong> ${user.location}</p>
+        <p><strong>Description:</strong> ${user.description}</p>
+        <p><strong>Rank:</strong> ${user.rank}</p>
+        <div class="card-buttons">
+          <a href="tel:${callNum}" class="call-btn">📞 Call Me</a>
+          <a href="https://wa.me/${chatNum}" class="chat-btn" target="_blank">💬 Chat Me</a>
+          <button class="fav-btn">❤️ Like</button>
         </div>
       </div>
     `;
-    card.querySelector(".fav-btn").addEventListener("click", () => showMessage(`Liked ${user.name}`));
+
+    card.querySelector(".fav-btn").addEventListener("click", () =>
+      showMessage(`You liked ${user.name}!`)
+    );
+
     container.appendChild(card);
   });
 }
 
-function showMessage(text) {
-  const popup = document.getElementById("messagePopup");
-  document.getElementById("popupText").innerText = text;
-  popup.classList.remove("hidden");
-  setTimeout(() => popup.classList.add("hidden"), 2000);
+// 🌗 Theme Toggle
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle("dark-mode", isDarkMode);
+  document.body.classList.toggle("light-mode", !isDarkMode);
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 }
 
+// 🔍 Apply Filters
 function applyFilters() {
-  const name = document.getElementById("searchInput").value.toLowerCase();
-  const location = document.getElementById("filterLocation").value.toLowerCase();
-  const minAge = parseInt(document.getElementById("minAge").value) || 0;
-  const maxAge = parseInt(document.getElementById("maxAge").value) || 100;
-
-  filteredUsers = users.filter(u =>
-    u.name.toLowerCase().includes(name) &&
-    u.location.toLowerCase().includes(location) &&
-    u.age >= minAge && u.age <= maxAge
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(search)
   );
   currentPage = 1;
   renderUsers();
 }
 
+// 🧹 Clear Filters
 function clearFilters() {
   document.getElementById("searchInput").value = "";
-  document.getElementById("filterLocation").value = "";
-  document.getElementById("minAge").value = "";
-  document.getElementById("maxAge").value = "";
   filteredUsers = [...users];
   currentPage = 1;
   renderUsers();
 }
 
-function changePage(page) {
-  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
-  if (page < 1 || page > maxPage) return;
-  currentPage = page;
+// ↕ Sort Users
+function sortUsers() {
+  const sortValue = document.getElementById("sortBy").value;
+  filteredUsers.sort((a, b) => {
+    if (sortValue === "name") return a.name.localeCompare(b.name);
+    if (sortValue === "age") return a.age - b.age;
+    if (sortValue === "rank") return a.rank - b.rank;
+    if (sortValue === "location") return a.location.localeCompare(b.location);
+    return 0;
+  });
   renderUsers();
 }
 
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-  document.body.classList.toggle("light-mode");
-  const isDark = document.body.classList.contains("dark-mode");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+// ⏪ Pagination
+function changePage(page) {
+  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
+  if (page >= 1 && page <= maxPage) {
+    currentPage = page;
+    renderUsers();
+  }
 }
 
-function setupEvents() {
-  document.getElementById("filterBtn").onclick = applyFilters;
-  document.getElementById("clearFilterBtn").onclick = clearFilters;
-  document.getElementById("themeToggle").onclick = toggleTheme;
-  document.getElementById("prevPage").onclick = () => changePage(currentPage - 1);
-  document.getElementById("nextPage").onclick = () => changePage(currentPage + 1);
-  document.getElementById("backToTop").onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+function setupPagination() {
+  // already handled by button click
 }
+
+// 💬 Message Popup
+function showMessage(msg) {
+  const popup = document.getElementById("messagePopup");
+  const popupText = document.getElementById("popupText");
+  popupText.innerText = msg;
+  popup.classList.remove("hidden");
+  setTimeout(() => popup.classList.add("hidden"), 2000);
+}
+
+// 🌙 Load saved theme
+window.onload = function () {
+  const theme = localStorage.getItem("theme");
+  if (theme === "dark") {
+    document.body.classList.add("dark-mode");
+    isDarkMode = true;
+  }
+};
