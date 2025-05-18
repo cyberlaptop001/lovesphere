@@ -8,23 +8,24 @@
 </head>
 <body class="dark-mode">
 
-  <!-- 🔮 Background Video (behind everything) -->
+  <!-- 🔮 Background Video -->
   <div class="video-background">
     <video autoplay muted loop id="bgVideo">
       <source src="videos/bg.mp4" type="video/mp4" />
     </video>
   </div>
 
-  <!-- 🔝 Back to Top Button -->
-  <button id="backToTop" class="neon-button">↑ BACK TO TOP</button>
+  <!-- 🔝 Back to Top -->
+  <button id="backToTop">↑ BACK TO TOP</button>
 
   <!-- 🌟 Top Menu -->
   <header class="top-menu">
-    <div class="logo neon-text">Love<span class="neon-pink">Sphere</span></div>
+    <div class="logo neon-text"><span class="neon-text">Love</span><span class="neon-pink">Sphere</span></div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="#">Policy & Guidelines</a>
+      <a href="index.html" class="neon-button">Home</a>
+      <a href="gallery.html" class="neon-button">Gallery</a>
+      <a href="#" class="neon-button">Policy & Guidelines</a>
+      <a href="#" class="neon-button">Admin Login</a>
     </nav>
     <button id="themeToggle" class="neon-button">Toggle Theme</button>
   </header>
@@ -47,13 +48,12 @@
     <button id="clearFilterBtn" class="neon-button">Clear Filters</button>
   </div>
 
-  <!-- 🔢 Result Count -->
   <div id="resultCount"></div>
 
-  <!-- 👤 User Cards Container -->
+  <!-- 👤 User Cards -->
   <div class="user-container" id="userCards"></div>
 
-  <!-- 🔁 Pagination -->
+  <!-- 🔄 Pagination -->
   <div class="pagination">
     <button id="prevPage" class="neon-button">Previous</button>
     <span id="pageNumber">Page 1</span>
@@ -87,9 +87,9 @@
     </div>
   </div>
 
-  <!-- 🦶 Neon Footer -->
+  <!-- 🦶 Footer -->
   <footer>
-    <p>&copy; 2025 <span class="neon-text">LoveSphere</span>. All Rights Reserved and Copyright Protected.</p>
+    <p>&copy; 2025 LoveSphere. All rights reserved.</p>
     <div class="seo-buttons">
       <button onclick="location.href='index.html'">SEO Page</button>
       <button onclick="location.href='gallery.html'">Gallery</button>
@@ -98,10 +98,10 @@
     </div>
   </footer>
 
-  <!-- 💬 Message Popup -->
+  <!-- 💬 Message Box -->
   <div class="popup hidden" id="messagePopup"><span id="popupText">Message</span></div>
 
-  <!-- 💡 Scripts -->
+  <!-- 💡 Script -->
   <script src="js/gallery.js"></script>
 </body>
 </html>
