@@ -5,104 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gallery - LoveSphere</title>
   <link rel="stylesheet" href="css/gallery.css" />
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .top-menu {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .top-menu nav a {
-      color: #0ff;
-      margin: 0 1rem;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .user-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding: 20px;
-      align-items: center;
-    }
-
-    .user-card {
-      width: 100%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .user-card-layout {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .user-image-container {
-      width: 250px;
-      height: 350px;
-      overflow: hidden;
-      border-radius: 12px;
-      margin-bottom: 15px;
-    }
-
-    .user-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .user-info {
-      text-align: center;
-    }
-
-    .seo-banner {
-      text-align: center;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      margin-top: 2rem;
-      font-size: 1.2rem;
-    }
-
-    .footer {
-      background: rgba(0, 0, 0, 0.8);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .footer a {
-      color: #0ff;
-      margin: 0 1rem;
-    }
-  </style>
 </head>
 <body class="light-mode">
+  <div class="video-background">
+    <video autoplay muted loop id="bgVideo">
+      <source src="videos/bg.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
   <!-- 🔝 Top Menu -->
   <div class="top-menu">
     <div class="logo">LoveSphere</div>
@@ -133,12 +44,6 @@
     <button id="clearFilterBtn" class="glow-button">Clear Filters</button>
   </div>
 
-  <!-- 🎥 Background Video -->
-  <video autoplay muted loop id="bg-video">
-    <source src="videos/bg.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
   <!-- 📊 Result Count -->
   <div id="resultCount">Total Results: 0</div>
 
@@ -161,16 +66,18 @@
   </div>
 
   <!-- ⭐ SEO Block -->
-  <div class="seo-banner">
-    <h2>Top Call Girls & Escort Service in Lucknow</h2>
-    <p>Find high-profile, verified independent call girls, college girls, and bhabhi in Charbagh, Aliganj, Gomtinagar, and more.</p>
+  <div class="info-boxes">
+    <div class="neon-box">
+      <h2>Top Call Girls & Escort Service in Lucknow</h2>
+      <p><span class="highlight">High-profile call girls</span>, college girls, and bhabhi available in <span class="highlight">Charbagh</span>, <span class="highlight">Aliganj</span>, <span class="highlight">Chinhat</span>, <span class="highlight">Indiranagar</span>, <span class="highlight">Ashiyana</span>, <span class="highlight">BBD City</span>, <span class="highlight">Lucknow University</span>, and more.</p>
+    </div>
   </div>
 
   <!-- 🦶 Footer -->
-  <div class="footer">
+  <footer>
     <a href="#">© 2025 LoveSphere</a>
     <a href="seo.html">Policy & Guidelines</a>
-  </div>
+  </footer>
 
   <script src="js/gallery.js"></script>
 </body>
