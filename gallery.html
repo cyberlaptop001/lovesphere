@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gallery - LoveSphere</title>
-  <link rel="stylesheet" href="css/gallery.css" />
+  <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body class="light-mode">
-  <!-- 🔄 Background Video Behind Content -->
+
+  <!-- 🔮 Video Background -->
   <div class="video-background">
-    <video autoplay muted loop id="bg-video">
-      <source src="videos/bg.mp4" type="video/mp4" />
+    <video autoplay muted loop>
+      <source src="videos/bg.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- 🔝 Top Menu -->
+  <!-- 🔝 Top Navigation -->
   <div class="top-menu">
     <div class="logo">LoveSphere</div>
     <nav>
@@ -25,13 +26,13 @@
     <button id="themeToggle" class="glow-button small">Toggle Theme</button>
   </div>
 
-  <!-- 🔍 Filter/Search Bar -->
+  <!-- 🔍 Filters -->
   <div id="filterBar">
-    <input type="text" id="searchInput" placeholder="Search by name..." />
-    <input type="text" id="filterLocation" placeholder="Location" />
-    <input type="text" id="filterServices" placeholder="Services" />
-    <input type="number" id="minAge" placeholder="Min Age" />
-    <input type="number" id="maxAge" placeholder="Max Age" />
+    <input type="text" id="searchInput" placeholder="Search by name...">
+    <input type="text" id="filterLocation" placeholder="Location">
+    <input type="text" id="filterServices" placeholder="Services">
+    <input type="number" id="minAge" placeholder="Min Age">
+    <input type="number" id="maxAge" placeholder="Max Age">
     <select id="sortBy">
       <option value="">Sort By</option>
       <option value="age">Age</option>
@@ -39,12 +40,11 @@
       <option value="name">Name</option>
       <option value="location">Location</option>
     </select>
-    <br />
     <button id="filterBtn" class="glow-button">Apply Filters</button>
     <button id="clearFilterBtn" class="glow-button">Clear Filters</button>
   </div>
 
-  <!-- 📊 Result Count -->
+  <!-- 📊 Result Info -->
   <div id="resultCount">Total Results: 0</div>
 
   <!-- 👤 User Cards -->
@@ -65,18 +65,20 @@
     <span id="popupText">Message</span>
   </div>
 
-  <!-- ⭐ SEO Block -->
-  <div class="neon-box">
-    <h2>Top Call Girls & Escort Service in Lucknow</h2>
-    <p>Find high-profile, verified independent call girls, college girls, and bhabhi in Charbagh, Aliganj, Gomtinagar, and more locations in Lucknow. Choose from <strong>model escorts</strong>, <strong>celebrity companions</strong>, and <strong>GFE experts</strong> for a memorable time.</p>
+  <!-- ⭐ SEO Text Block -->
+  <div class="info-boxes">
+    <div class="neon-box">
+      <h2>Top Call Girls & Escort Service in Lucknow</h2>
+      <p>Find high-profile, verified independent call girls, college girls, and <strong>bhabhi</strong> in <strong>Charbagh</strong>, <strong>Aliganj</strong>, <strong>Gomtinagar</strong>, and more locations in Lucknow. Choose from <strong>model escorts</strong>, <strong>celebrity companions</strong>, and <strong>GFE experts</strong> for a memorable time.</p>
+    </div>
   </div>
 
   <!-- 🦶 Footer -->
   <footer>
-    <div>
-      <p>&copy; 2025 <a href="index.html">LoveSphere</a>. All rights reserved.</p>
+    <p>
+      &copy; 2025 <a href="index.html">LoveSphere</a>. All rights reserved. 
       <a href="seo.html">Policy & Guidelines</a>
-    </div>
+    </p>
   </footer>
 
   <script src="js/gallery.js"></script>
