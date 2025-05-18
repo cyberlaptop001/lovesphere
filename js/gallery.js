@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (users.length === 0) {
     generateUsers(100);
-    users = JSON.parse(localStorage.getItem("galleryUsers")); // 🔥 critical!
+    users = JSON.parse(localStorage.getItem("galleryUsers"));
   }
 
   filteredUsers = [...users];
@@ -30,38 +30,40 @@ function generateUsers(count) {
     "Priya", "Sonam", "Moni", "Simran", "Kavya", "Pooja", "Megha", "Isha", "Tanya", "Anjali",
     "Neha", "Divya", "Ayesha", "Ritika", "Kriti", "Sakshi", "Sneha", "Shivani", "Roshni", "Payal"
   ];
-  const sampleServices = ["Massage", "Dinner", "Travel", "Companionship", "Private Shows"];
-  const sampleDescriptions = [
-    "Charming, bubbly personality.",
-    "Elite, elegant and educated.",
-    "Sweet, friendly and passionate.",
-    "Fun-loving, easy-going vibe.",
-    "Smart, witty, and independent.",
-    "Energetic and open-minded."
-  ];
-  const sampleLocations = [
-    "Charbagh", "Aliganj", "Munsi Puliya", "Chinhat", "BBD City", "Lucknow University",
-    "Indira Nagar", "Mahanagar", "Ashiyana", "Matiyari"
-  ];
+  const categories = ["College Girl", "Bhabhi", "Aunty"];
   const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
+  const descriptions = [
+    "Happy endings, Role Play, Custom makeups, Hot dresses, full moanings",
+    "Blowjob, Hairjob, All positions, Kamasutra Positions, Full satisfaction",
+    "69 style, shower romance, tight experience, fantasy moves, kissing passion",
+    "Late night passion, body worship, full girlfriend vibe, wild experiments",
+    "GFE, dance shows, strip tease, foreplay master, creamy touch, full romance"
+  ];
+  const locations = [
+    "Charbagh, Lucknow", "Aliganj, Lucknow", "Gomtinagar, Lucknow", "Chinhat, Lucknow",
+    "Naka, Lucknow", "Alambagh, Lucknow", "Para, Lucknow", "Ashiyana, Lucknow",
+    "Indiranagar, Lucknow", "Mahanagar, Lucknow", "Kaisharbagh, Lucknow", "BBD City, Lucknow",
+    "Lucknow University City", "Matiyari, Lucknow"
+  ];
   const seoKeywords = `Lucknow escorts, Call girls in Lucknow, Escort services Lucknow`;
 
   const generated = [];
 
   for (let i = 0; i < count; i++) {
     const age = 18 + (i % 30);
-    const category = age <= 25 ? "College Girl" : age <= 35 ? "Bhabhi" : "Aunty";
+    const category = categories[i % categories.length];
+    const subCategory = subCategories[i % subCategories.length];
 
     const user = {
       id: i + 1,
       name: names[i % names.length],
-      age: age,
+      age,
       height: 150 + (i % 50),
       category,
-      subCategory: subCategories[i % subCategories.length],
-      services: [sampleServices[i % sampleServices.length]],
-      location: sampleLocations[i % sampleLocations.length],
-      description: sampleDescriptions[i % sampleDescriptions.length],
+      subCategory,
+      services: ["Full Service", "Massage", "Dinner Date"],
+      location: locations[i % locations.length],
+      description: descriptions[i % descriptions.length],
       rank: i + 1,
       online: i % 2 === 0,
       image: `images/user${(i % 10) + 1}.jpg`,
@@ -81,7 +83,6 @@ function generateUsers(count) {
   localStorage.setItem("galleryUsers", JSON.stringify(generated));
 }
 
-// ✅ Render User Cards
 function renderUsers() {
   const startIndex = (currentPage - 1) * usersPerPage;
   const usersToShow = filteredUsers.slice(startIndex, startIndex + usersPerPage);
@@ -133,7 +134,6 @@ function renderUsers() {
   });
 }
 
-// ✅ Theme Toggle
 function toggleTheme() {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode");
@@ -141,7 +141,6 @@ function toggleTheme() {
   localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 }
 
-// ✅ Popup Message
 function showMessage(text) {
   const popup = document.getElementById("messagePopup");
   const popupText = document.getElementById("popupText");
@@ -150,7 +149,6 @@ function showMessage(text) {
   setTimeout(() => popup.classList.add("hidden"), 2000);
 }
 
-// ✅ Filters
 function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   filteredUsers = users.filter(u =>
@@ -167,7 +165,6 @@ function clearFilters() {
   renderUsers();
 }
 
-// ✅ Sorting
 function sortUsers() {
   const sortValue = document.getElementById("sortBy").value;
   filteredUsers.sort((a, b) => {
@@ -180,7 +177,6 @@ function sortUsers() {
   renderUsers();
 }
 
-// ✅ Pagination
 function changePage(page) {
   const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
   if (page < 1 || page > maxPage) return;
@@ -192,7 +188,6 @@ function setupPagination() {
   // Already handled by prev/next button events
 }
 
-// ✅ Load dark mode on startup
 window.onload = function () {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
