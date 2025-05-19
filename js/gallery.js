@@ -1,165 +1,150 @@
-// 📁 File: js/gallery.js
-
-// Fallback demo users if none in localStorage
-let users = [];
-
-try {
-  const storedUsers = JSON.parse(localStorage.getItem("users"));
-  if (Array.isArray(storedUsers) && storedUsers.length > 0) {
-    users = storedUsers;
-  } else {
-    users = [
-      {
-        name: "Riya",
-        age: 25,
-        location: "Lucknow",
-        services: ["Massage", "GFE"],
-        image: "images/riya.jpg",
-        rank: 4
-      },
-      {
-        name: "Anjali",
-        age: 23,
-        location: "Gomtinagar",
-        services: ["Escort", "Dinner Date"],
-        image: "images/anjali.jpg",
-        rank: 5
-      }
-    ];
+// Fallback users in case localStorage is empty
+const fallbackUsers = [
+  {
+    name: "Riya",
+    age: 23,
+    location: "Lucknow",
+    services: "Massage, Companionship",
+    rank: 4.5,
+    image: "images/users/riya.jpg"
+  },
+  {
+    name: "Priya",
+    age: 25,
+    location: "Gomtinagar",
+    services: "Dinner Date, Role-play",
+    rank: 4.7,
+    image: "images/users/priya.jpg"
+  },
+  {
+    name: "Anjali",
+    age: 21,
+    location: "Charbagh",
+    services: "Full Night, Travel",
+    rank: 4.9,
+    image: "images/users/anjali.jpg"
   }
-} catch (e) {
-  console.error("Error parsing users from localStorage:", e);
+];
+
+// Inject fallback users into localStorage if empty
+if (!localStorage.getItem("users") || JSON.parse(localStorage.getItem("users")).length === 0) {
+  localStorage.setItem("users", JSON.stringify(fallbackUsers));
 }
 
-let filteredUsers = [...users];
+let users = JSON.parse(localStorage.getItem("users"));
 let currentPage = 1;
 const usersPerPage = 6;
 
-function renderUsers() {
-  const userContainer = document.getElementById("userCards");
-  userContainer.innerHTML = "";
+// Render User Cards
+function renderUsers(usersToShow) {
+  const container = document.getElementById("userCards");
+  container.innerHTML = "";
 
-  const start = (currentPage - 1) * usersPerPage;
-  const end = start + usersPerPage;
-  const paginatedUsers = filteredUsers.slice(start, end);
-
-  if (paginatedUsers.length === 0) {
-    userContainer.innerHTML = '<p class="no-users">No profiles found.</p>';
+  if (usersToShow.length === 0) {
+    container.innerHTML = "<p class='neon-text'>No profiles match your search.</p>";
+    document.getElementById("resultCount").textContent = "Showing 0 of 0 profiles";
     return;
   }
 
-  paginatedUsers.forEach(user => {
-    const services = user.services.join(", ");
-    userContainer.innerHTML += `
-      <div class="user-card">
-        <img src="${user.image}" alt="${user.name}" class="user-img" />
-        <div class="user-info">
-          <h3 class="user-name neon-text">${user.name}, ${user.age}</h3>
-          <p class="user-location">📍 ${user.location}</p>
-          <p class="user-services">💖 ${services}</p>
-          <p class="user-rank">⭐ Rank: ${user.rank}</p>
-          <div class="card-actions">
-            <button class="neon-button" onclick="showPopup('Calling ${user.name}...')">📞 Call</button>
-            <button class="neon-button" onclick="showPopup('Chatting with ${user.name}...')">💬 Chat</button>
-            <button class="neon-button like-button">❤️ Like</button>
-          </div>
+  const start = (currentPage - 1) * usersPerPage;
+  const end = start + usersPerPage;
+  const paginatedUsers = usersToShow.slice(start, end);
+
+  for (let user of paginatedUsers) {
+    const card = document.createElement("div");
+    card.className = "user-card";
+    card.innerHTML = `
+      <img src="${user.image}" alt="${user.name}" class="user-image">
+      <div class="user-info">
+        <h3>${user.name}, ${user.age}</h3>
+        <p><strong>Location:</strong> ${user.location}</p>
+        <p><strong>Services:</strong> ${user.services}</p>
+        <p><strong>Rank:</strong> ⭐ ${user.rank}</p>
+        <div class="card-buttons">
+          <button class="call-btn">📞 Call</button>
+          <button class="chat-btn">💬 Chat</button>
+          <button class="like-btn">❤️ Like</button>
         </div>
       </div>
     `;
-  });
+    container.appendChild(card);
+  }
 
-  document.querySelectorAll('.like-button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.toggle('liked');
-      btn.innerText = btn.classList.contains('liked') ? '💖 Liked' : '❤️ Like';
-    });
-  });
-
-  document.getElementById("pageNumber").innerText = `Page ${currentPage}`;
-  document.getElementById("resultCount").innerText = `${filteredUsers.length} result(s) found`;
+  document.getElementById("resultCount").textContent = `Showing ${usersToShow.length} profiles`;
+  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
 }
 
 function applyFilters() {
   const name = document.getElementById("searchInput").value.toLowerCase();
   const location = document.getElementById("locationInput").value.toLowerCase();
-  const service = document.getElementById("serviceInput").value.toLowerCase();
-  const minAge = parseInt(document.getElementById("minAge").value);
-  const maxAge = parseInt(document.getElementById("maxAge").value);
+  const services = document.getElementById("serviceInput").value.toLowerCase();
+  const minAge = parseInt(document.getElementById("minAge").value) || 0;
+  const maxAge = parseInt(document.getElementById("maxAge").value) || 100;
   const sortBy = document.getElementById("sortBy").value;
 
-  filteredUsers = users.filter(user => {
-    return (
-      (!name || user.name.toLowerCase().includes(name)) &&
-      (!location || user.location.toLowerCase().includes(location)) &&
-      (!service || user.services.join(",").toLowerCase().includes(service)) &&
-      (!minAge || user.age >= minAge) &&
-      (!maxAge || user.age <= maxAge)
-    );
-  });
+  let filtered = users.filter(user =>
+    user.name.toLowerCase().includes(name) &&
+    user.location.toLowerCase().includes(location) &&
+    user.services.toLowerCase().includes(services) &&
+    user.age >= minAge &&
+    user.age <= maxAge
+  );
 
   if (sortBy) {
-    filteredUsers.sort((a, b) => {
+    filtered.sort((a, b) => {
       if (sortBy === "name") return a.name.localeCompare(b.name);
-      if (sortBy === "age") return a.age - b.age;
-      if (sortBy === "rank") return b.rank - a.rank;
+      if (sortBy === "age" || sortBy === "rank") return a[sortBy] - b[sortBy];
       if (sortBy === "location") return a.location.localeCompare(b.location);
+      return 0;
     });
   }
 
   currentPage = 1;
-  renderUsers();
+  renderUsers(filtered);
 }
 
-document.getElementById("filterBtn").addEventListener("click", applyFilters);
-document.getElementById("clearFilterBtn").addEventListener("click", () => {
+function clearFilters() {
   document.getElementById("searchInput").value = "";
   document.getElementById("locationInput").value = "";
   document.getElementById("serviceInput").value = "";
   document.getElementById("minAge").value = "";
   document.getElementById("maxAge").value = "";
   document.getElementById("sortBy").value = "";
-  filteredUsers = [...users];
   currentPage = 1;
-  renderUsers();
-});
+  renderUsers(users);
+}
 
+document.getElementById("filterBtn").addEventListener("click", applyFilters);
+document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
 document.getElementById("prevPage").addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
-    renderUsers();
+    applyFilters();
   }
 });
-
 document.getElementById("nextPage").addEventListener("click", () => {
-  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
-  if (currentPage < maxPage) {
+  if ((currentPage * usersPerPage) < users.length) {
     currentPage++;
-    renderUsers();
+    applyFilters();
   }
 });
 
-function showPopup(message) {
-  const popup = document.getElementById("messagePopup");
-  const text = document.getElementById("popupText");
-  text.innerText = message;
-  popup.classList.remove("hidden");
-  setTimeout(() => popup.classList.add("hidden"), 2000);
-}
-
-// Back to Top button
-const backToTop = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  backToTop.style.display = window.scrollY > 200 ? "block" : "none";
+// Like Button Toggle
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("like-btn")) {
+    e.target.classList.toggle("liked");
+  }
 });
-backToTop.addEventListener("click", () => {
+
+// Back to Top
+document.getElementById("backToTop").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Theme toggle
-const themeToggle = document.getElementById("themeToggle");
-themeToggle.addEventListener("click", () => {
+// Theme Toggle (Optional)
+document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 });
 
-// Initial render
-renderUsers();
+// Initial Render
+renderUsers(users);
