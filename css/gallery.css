@@ -1,356 +1,254 @@
-/* ===============================
-   Global & Theme Styles
-=============================== */
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
+/* Base Reset & Theme */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  overflow-x: hidden;
   position: relative;
-  z-index: 1;
 }
 
-body.light-mode {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  background: #ffffff;
-  color: #000000;
-}
-
-body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-}
-
-/* ===============================
-   Video Background
-=============================== */
-.video-background {
+#bg-video {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
-  overflow: hidden;
-}
-
-.video-background video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
   z-index: -1;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  filter: brightness(0.3);
 }
 
-/* ===============================
-   Top Menu Navigation
-=============================== */
-.top-menu {
+/* Header */
+.top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8);
   padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid #0ff;
 }
 
-.top-menu .logo {
+.logo {
   font-size: 2rem;
   font-weight: bold;
-  color: #00ff00;
-  text-shadow: 0 0 10px #00ff00;
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0;
 }
 
-.top-menu nav a {
-  margin: 0 1rem;
+.nav-links a {
+  margin: 0 10px;
+  color: #f0f;
   font-weight: bold;
-  color: #ff00ff;
-  text-shadow: 0 0 10px #ff00ff;
+  text-decoration: none;
 }
 
-.top-menu button {
-  padding: 10px 20px;
-  border-radius: 20px;
-  background: #00ffff;
-  color: black;
-  font-weight: bold;
+.nav-links a.active {
+  text-decoration: underline;
+}
+
+.nav-links button {
+  padding: 5px 15px;
+  background: cyan;
   border: none;
-  cursor: pointer;
-  box-shadow: 0 0 10px #0ff;
-}
-
-/* ===============================
-   Filters / Search
-=============================== */
-#filterBar {
-  text-align: center;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-}
-
-#filterBar input,
-#filterBar select {
-  padding: 10px;
-  border-radius: 10px;
-  margin: 5px;
-  border: 2px solid #ff00ff;
+  border-radius: 20px;
   font-weight: bold;
-  box-shadow: 0 0 10px #0ff;
+  cursor: pointer;
 }
 
-/* ===============================
-   User Cards
-=============================== */
-.user-container {
+/* CTA Strip */
+.cta-strip {
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  color: black;
+  padding: 10px;
+  font-weight: bold;
+  animation: glow 3s linear infinite;
+}
+
+/* Filters */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+}
+
+.filter-bar select,
+.filter-bar input {
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 8px #f0f;
+}
+
+.filter-bar button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  font-weight: bold;
+  background: #0ff;
+  color: #000;
+  cursor: pointer;
+}
+
+/* User Cards */
+.gallery-container {
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  padding: 30px 20px;
+  gap: 2rem;
 }
 
 .user-card {
   display: flex;
-  width: 90%;
-  max-width: 1000px;
+  flex-direction: row;
+  align-items: center;
   background: rgba(0, 0, 0, 0.7);
-  border: 2px solid #00ff00;
-  box-shadow: 0 0 20px #ff00ff;
-  border-radius: 15px;
-  padding: 20px;
-  transition: transform 0.3s ease;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 15px #f0f;
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
 }
 
 .user-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 30px #00ff00, 0 0 60px #ff00ff;
+  transform: scale(1.02);
 }
 
-.user-image-container {
-  width: 200px;
-  height: 260px;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 3px solid #ff00ff;
-  flex-shrink: 0;
-  margin-right: 20px;
-}
-
-.user-img {
-  width: 100%;
-  height: 100%;
+.user-card img {
+  width: 140px;
+  height: 140px;
+  border-radius: 10px;
+  margin-right: 1.5rem;
   object-fit: cover;
 }
 
-.user-info {
-  flex: 1;
+.user-info h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
 }
 
 .user-info p {
-  margin: 6px 0;
-  color: #ff69b4;
+  margin: 5px 0;
 }
 
-.user-info p strong {
-  color: #00ff00;
-}
-
-.badge.top-rated {
-  background-color: gold;
-  padding: 4px 10px;
-  border-radius: 12px;
+.user-info span {
   font-weight: bold;
-  font-size: 12px;
-  box-shadow: 0 0 8px gold;
-  margin-bottom: 10px;
-  display: inline-block;
+  color: #0f0;
 }
 
-.verified-badge {
-  background: gold;
-  color: black;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 12px;
-  padding: 5px 10px;
-  float: right;
-  box-shadow: 0 0 8px gold;
+.action-buttons {
+  margin-top: 10px;
 }
 
-/* ===============================
-   Card Action Buttons
-=============================== */
-.card-buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.card-buttons a,
-.card-buttons button {
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 14px;
-  border: 2px solid #0ff;
-  color: #0ff;
+.action-buttons button {
+  margin: 5px;
+  padding: 8px 16px;
   background: transparent;
-  text-shadow: 0 0 5px #0ff;
-  box-shadow: 0 0 10px #0ff;
+  color: #0ff;
+  border: 2px solid #0ff;
+  border-radius: 30px;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
 }
 
-.card-buttons button:hover,
-.card-buttons a:hover {
-  background-color: #0ff;
+.action-buttons button:hover {
+  background: #0ff;
   color: #000;
-  box-shadow: 0 0 30px #0ff;
 }
 
-/* ===============================
-   Pagination
-=============================== */
+/* Pagination */
 .pagination {
   text-align: center;
-  margin: 2rem 0;
+  padding: 1rem;
 }
 
 .pagination button {
   padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
   margin: 0 10px;
-  border-radius: 25px;
-  background: transparent;
-  border: 2px solid #00ff00;
-  color: #00ff00;
+  background: #f0f;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  box-shadow: 0 0 12px #f0f;
 }
 
-.pagination button:hover {
-  background: #00ff00;
-  color: black;
-  box-shadow: 0 0 20px #00ff00;
+#pageNumber {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-/* ===============================
-   Back to Top
-=============================== */
+/* SEO Section */
+.seo-section {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  color: #ccc;
+}
+
+.seo-section h2 {
+  font-size: 1.8rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+.seo-section p {
+  margin-top: 10px;
+}
+
+/* Footer */
+footer {
+  background: #111;
+  padding: 1rem;
+  text-align: center;
+  color: #999;
+  border-top: 2px solid #0ff;
+}
+
+.footer-links a {
+  margin: 0 15px;
+  color: #f0f;
+  text-decoration: none;
+}
+
+/* Back to Top Button */
 #backToTop {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: black;
-  color: white;
-  border-radius: 25px;
-  border: 2px solid #0f0;
-  box-shadow: 0 0 10px #0f0;
-  display: none;
-  z-index: 20;
+  bottom: 20px;
+  right: 20px;
+  background: #0ff;
+  color: #000;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 10px #0ff;
+  cursor: pointer;
+  z-index: 999;
 }
 
-/* ===============================
-   Footer
-=============================== */
-footer {
-  background-color: #1e2a38;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-footer a {
-  color: #00e6e6;
-  font-weight: bold;
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-footer a:hover {
-  color: #ff00ff;
-}
-
-footer .seo-buttons button {
-  background: black;
-  color: white;
-  border: 2px solid #00ff00;
-  padding: 12px 24px;
-  margin: 10px;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px #00ff00;
-}
-
-footer .seo-buttons button:hover {
-  background: #00ff00;
-  color: black;
-  box-shadow: 0 0 30px #00ff00;
-  transform: scale(1.05);
-}
-footer .admin-updates,
-footer .seo-text {
-  margin-top: 20px;
-  color: #ff69b4;
-  font-weight: bold;
-  text-shadow: 0 0 10px #ff00ff;
-}
-.card-buttons .like-button.liked {
-  background: #ff00ff;
-  color: black;
-  box-shadow: 0 0 20px #ff00ff;
-}
-.message-popup {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #111;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ff00cc;
-  z-index: 1000;
-  opacity: 0.95;
-}
-
-.message-popup.hidden {
-  display: none;
-}
-footer {
-  background-color: #111;
-  color: #eee;
-  padding: 30px 20px;
-  text-align: center;
-  font-size: 14px;
-  box-shadow: 0 -2px 10px #ff00cc;
-  border-top: 1px solid #444;
-}
-
-footer a {
-  color: #ff00cc;
-  text-decoration: none;
-  margin: 0 5px;
-}
-
-footer a:hover {
-  text-decoration: underline;
+/* Animations */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px #f0f;
+  }
+  50% {
+    box-shadow: 0 0 25px #0ff;
+  }
+  100% {
+    box-shadow: 0 0 10px #f0f;
+  }
 }
