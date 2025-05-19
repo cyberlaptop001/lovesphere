@@ -318,3 +318,39 @@ footer .seo-text {
   color: black;
   box-shadow: 0 0 20px #ff00ff;
 }
+.message-popup {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #111;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ff00cc;
+  z-index: 1000;
+  opacity: 0.95;
+}
+
+.message-popup.hidden {
+  display: none;
+}
+footer {
+  background-color: #111;
+  color: #eee;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: 0 -2px 10px #ff00cc;
+  border-top: 1px solid #444;
+}
+
+footer a {
+  color: #ff00cc;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
