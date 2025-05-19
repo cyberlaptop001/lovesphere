@@ -306,3 +306,15 @@ footer .seo-buttons button:hover {
   box-shadow: 0 0 30px #00ff00;
   transform: scale(1.05);
 }
+footer .admin-updates,
+footer .seo-text {
+  margin-top: 20px;
+  color: #ff69b4;
+  font-weight: bold;
+  text-shadow: 0 0 10px #ff00ff;
+}
+.card-buttons .like-button.liked {
+  background: #ff00ff;
+  color: black;
+  box-shadow: 0 0 20px #ff00ff;
+}
