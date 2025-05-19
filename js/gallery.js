@@ -93,11 +93,17 @@ function renderUsers() {
   const usersToShow = filteredUsers.slice(start, start + usersPerPage);
 
   resultCount.innerText = `Total Results: ${filteredUsers.length}`;
-  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+  document.getElementById("pageNumber").textContent =
+    `Page ${currentPage} of ${Math.ceil(filteredUsers.length / usersPerPage)}`;
+
+  if (usersToShow.length === 0) {
+    container.innerHTML = "<p class='no-results'>No users match your filters.</p>";
+    return;
+  }
 
   usersToShow.forEach(user => {
-    const callNum = user.mobileNumbers.find(n => n.type === "call" || n.type === "both")?.number || "";
-    const chatNum = user.mobileNumbers.find(n => n.type === "chat" || n.type === "both")?.number || "";
+    const callNum = user.mobileNumbers.find(n => n.type === "call" || n.type === "both")?.number || "0000000000";
+    const chatNum = user.mobileNumbers.find(n => n.type === "chat" || n.type === "both")?.number || "0000000000";
 
     const card = document.createElement("div");
     card.className = "user-card";
@@ -143,7 +149,10 @@ function toggleTheme() {
 function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(search)
+    user.name.toLowerCase().includes(search) ||
+    user.location.toLowerCase().includes(search) ||
+    user.category.toLowerCase().includes(search) ||
+    user.subCategory.toLowerCase().includes(search)
   );
   currentPage = 1;
   renderUsers();
@@ -160,13 +169,14 @@ function clearFilters() {
 // ↕ Sort Users
 function sortUsers() {
   const sortValue = document.getElementById("sortBy").value;
-  filteredUsers.sort((a, b) => {
-    if (sortValue === "name") return a.name.localeCompare(b.name);
-    if (sortValue === "age") return a.age - b.age;
-    if (sortValue === "rank") return a.rank - b.rank;
-    if (sortValue === "location") return a.location.localeCompare(b.location);
-    return 0;
-  });
+  const sortFunctions = {
+    name: (a, b) => a.name.localeCompare(b.name),
+    age: (a, b) => a.age - b.age,
+    rank: (a, b) => a.rank - b.rank,
+    location: (a, b) => a.location.localeCompare(b.location)
+  };
+
+  filteredUsers.sort(sortFunctions[sortValue] || (() => 0));
   renderUsers();
 }
 
@@ -180,7 +190,7 @@ function changePage(page) {
 }
 
 function setupPagination() {
-  // already handled by button click
+  // Already handled via button clicks
 }
 
 // 💬 Message Popup
