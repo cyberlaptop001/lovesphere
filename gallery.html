@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LoveSphere Gallery</title>
-  <link rel="stylesheet" href="css/gallery.css?v=1.1" />
+  <link rel="stylesheet" href="css/gallery.css" />
   <script defer src="js/gallery.js"></script>
 </head>
 <body>
@@ -34,42 +34,64 @@
 
   <!-- Filter Bar -->
   <div class="filter-bar">
+    <input type="text" id="searchName" placeholder="Search by Name..." />
     <select id="filter-location">
-      <option value="">Location</option>
-      <option value="Lucknow">Lucknow</option>
-      <option value="Charbagh">Charbagh</option>
+      <option value="">All Locations</option>
+      <option>Gomti Nagar</option>
+      <option>Ashiyana</option>
+      <option>Telebagh</option>
+      <option>Para</option>
+      <option>Aligaj</option>
+      <option>Chinhat</option>
+      <option>Indiranagar</option>
+      <option>Mahanagar</option>
+      <option>Kapoorthala</option>
+      <option>Nishatganj</option>
+      <option>Charbagh</option>
+      <option>Naka</option>
+      <option>Chauk</option>
+      <option>Kaisarbagh</option>
+      <option>Aishbagh</option>
+      <option>PGI Road</option>
+      <option>Patrakarpuram</option>
+      <option>MunsiPuliya</option>
+      <option>ThediPuliya</option>
+      <option>BBD University city</option>
+      <option>Lucknow University city</option>
+      <option>Girls college</option>
     </select>
     <select id="filter-age">
-      <option value="">Age</option>
-      <option value="18-25">18-25</option>
-      <option value="26-35">26-35</option>
+      <option value="">All Ages</option>
+      <option value="18-25">18–25</option>
+      <option value="26-35">26–35</option>
+      <option value="36-40">36–40</option>
     </select>
     <select id="filter-category">
-      <option value="">Category</option>
-      <option value="Call Girls">Call Girls</option>
-      <option value="VIP Escorts">VIP Escorts</option>
+      <option value="">All Categories</option>
+      <option>College Girl</option>
+      <option>Bhabhi</option>
+      <option>Aunty</option>
     </select>
     <button id="applyFilter">Apply</button>
   </div>
 
-  <!-- User Cards Gallery -->
+  <!-- User Cards -->
   <main class="gallery-container" id="userCards">
-    <!-- JS will populate user cards here -->
+    <!-- Populated by JS -->
   </main>
 
   <!-- Pagination -->
   <div class="pagination">
-    <button id="prevPage">Prev</button>
+    <button id="prevPage">← Prev</button>
     <span id="pageNumber">Page 1</span>
-    <button id="nextPage">Next</button>
+    <button id="nextPage">Next →</button>
   </div>
 
   <!-- SEO Block -->
   <section class="seo-section">
-    <h2>Lucknow Escorts | VIP Models in India</h2>
+    <h2>Call Girls in Lucknow | Escort Services | 24x7 Availability</h2>
     <p>
-      Welcome to LoveSphere – India's #1 trusted platform to find elite models, escorts, and companions.
-      All profiles are 100% verified, safe, and discreet. Call or chat anytime.
+      Discover premium escort services in Lucknow with LoveSphere. Verified call girls available in Charbagh, Gomtinagar, Alambagh, Indiranagar, and more. Book independent escorts, college girls, bhabhis, or aunties with full privacy and satisfaction guarantee. Popular keywords include: callgirslucknow, lucknowcallgirls, escort lucknow, randi lucknow, Lucknow University city escorts, Chinhat services, Charbagh call girls, escort service in Lucknow, and many more.
     </p>
   </section>
 
@@ -83,7 +105,7 @@
     <p>&copy; 2025 LoveSphere. All rights reserved.</p>
   </footer>
 
-  <!-- Back to Top Button -->
+  <!-- Back to Top -->
   <button id="backToTop" title="Back to top">↑</button>
 </body>
 </html>
