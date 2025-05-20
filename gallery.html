@@ -3,170 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="100% Verified Escorts and VIP Models in India. View full gallery, filter by city, age & category. Safe, discreet, and 24x7 support."/>
-  <meta name="keywords" content="escort gallery, India escorts, VIP models, verified call girls"/>
-  <meta name="author" content="LoveSphere"/>
-  <title>Gallery | LoveSphere Escorts</title>
-  <link rel="stylesheet" href="gallery.css" />
+  <title>Gallery | LoveSphere</title>
+  <link rel="stylesheet" href="css/gallery.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/gallery.js"></script>
 </head>
 <body>
+  <!-- Video Background -->
+  <video autoplay muted loop id="bg-video">
+    <source src="videos/background.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
 
   <!-- Header -->
   <header>
     <div class="logo">LoveSphere</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="policy.html">Policy & Guidelines</a>
       <a href="gallery.html">Gallery</a>
       <a href="admin.html">Admin Login</a>
+      <button onclick="toggleTheme()">Toggle Theme</button>
     </nav>
   </header>
 
-  <!-- Announcement -->
-  <div class="announcement">
-    100% Genuine Pay After Satisfaction · 24x7 Services · Anytime Call/Chat Help
+  <!-- Tagline -->
+  <div class="tagline">
+    100% Genuine Pay After Satisfaction 24x7 Services Anytime Call/Chat Help
   </div>
 
-  <!-- Filters -->
+  <!-- Filter Bar -->
   <div class="filter-bar">
-    <select id="locationFilter">
-      <option value="">Location</option>
-      <option>Delhi</option>
-      <option>Mumbai</option>
-      <option>Bangalore</option>
-    </select>
-    <select id="ageFilter">
-      <option value="">Age</option>
-      <option>18-22</option>
-      <option>23-27</option>
-      <option>28-32</option>
-    </select>
-    <select id="categoryFilter">
-      <option value="">Category</option>
-      <option>VIP</option>
-      <option>Independent</option>
-      <option>Russian</option>
-    </select>
+    <select id="locationFilter"><option value="">Location</option></select>
+    <select id="ageFilter"><option value="">Age</option></select>
+    <select id="categoryFilter"><option value="">Category</option></select>
     <button onclick="applyFilters()">Apply</button>
   </div>
 
-  <!-- User Cards -->
-  <div id="userCards" class="user-cards"></div>
+  <!-- User Cards Container -->
+  <section id="userCards" class="user-cards"></section>
 
   <!-- Pagination -->
   <div class="pagination">
     <button onclick="prevPage()">Prev</button>
-    <span id="pageIndicator">Page 1</span>
+    <span id="pageNumber">Page 1</span>
     <button onclick="nextPage()">Next</button>
   </div>
 
-  <!-- Updates -->
-  <div class="updates">
-    📢 Latest Admin Updates: Profiles Verified May 2025 | 24x7 Call Girl Booking Open!
-  </div>
+  <!-- SEO Content -->
+  <section class="seo-content">
+    <h2>Delhi Escorts | VIP Models in India</h2>
+    <p>Welcome to LoveSphere – India’s #1 trusted platform to find elite models, escorts, and companions. All profiles are 100% verified, safe, and discreet. Call or chat anytime.</p>
+  </section>
 
-  <!-- SEO Footer -->
+  <!-- Admin and Call Girl Updates -->
+  <section class="updates">
+    <div class="update-box">
+      <h3>🔥 Latest Call Girl Updates</h3>
+      <ul>
+        <li>Neha, 22, Mumbai – New Arrival</li>
+        <li>Pooja, 24, Delhi – Verified VIP</li>
+        <li>Riya, 25, Bangalore – Available Tonight</li>
+      </ul>
+    </div>
+    <div class="update-box">
+      <h3>🛠️ Admin Notices</h3>
+      <ul>
+        <li>100+ profiles updated weekly</li>
+        <li>24x7 chat/call support available</li>
+        <li>Strict privacy & identity protection</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <h3>Delhi Escorts | VIP Models in India</h3>
-    <p>
-      Welcome to LoveSphere – India’s #1 trusted platform to find elite models, escorts, and companions.
-      All profiles are 100% verified, safe, and discreet. Call or chat anytime.
-    </p>
-    <a href="#">About</a> | <a href="#">Policy</a> | <a href="#">Contact</a><br/><br/>
-    © 2025 LoveSphere. All rights reserved.
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="policy.html">Policy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2025 LoveSphere. All rights reserved.</p>
   </footer>
 
   <!-- Back to Top -->
-  <div id="backToTop" onclick="scrollToTop()">↑</div>
-
-  <!-- Scripts -->
-  <script>
-    const totalUsers = 100;
-    const usersPerPage = 10;
-    let currentPage = 1;
-    const userCards = [];
-
-    // Generate fake user data
-    for (let i = 1; i <= totalUsers; i++) {
-      userCards.push({
-        name: "Model " + i,
-        age: 18 + (i % 10),
-        location: ["Delhi", "Mumbai", "Bangalore"][i % 3],
-        category: ["VIP", "Independent", "Russian"][i % 3],
-        img: `https://source.unsplash.com/200x200/?girl,face,model&sig=${i}`
-      });
-    }
-
-    function renderCards() {
-      const start = (currentPage - 1) * usersPerPage;
-      const end = start + usersPerPage;
-      const container = document.getElementById('userCards');
-      container.innerHTML = '';
-
-      const filtered = applyFilters(true);
-      const pageItems = filtered.slice(start, end);
-
-      pageItems.forEach(user => {
-        const card = document.createElement('div');
-        card.className = 'user-card';
-        card.innerHTML = `
-          <img src="${user.img}" alt="${user.name}" />
-          <div class="user-info">
-            <h3>${user.name}</h3>
-            <p>Location: ${user.location}</p>
-            <p>Age: ${user.age}</p>
-            <p>Category: ${user.category}</p>
-            <div class="user-actions">
-              <a href="tel:7619937539"><button>📞 Call</button></a>
-              <a href="https://wa.me/917619937539" target="_blank"><button>💬 Chat</button></a>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-
-      document.getElementById('pageIndicator').textContent = `Page ${currentPage}`;
-    }
-
-    function applyFilters(noRender) {
-      const loc = document.getElementById('locationFilter').value;
-      const age = document.getElementById('ageFilter').value;
-      const cat = document.getElementById('categoryFilter').value;
-
-      let filtered = [...userCards];
-      if (loc) filtered = filtered.filter(u => u.location === loc);
-      if (age) {
-        const [min, max] = age.split('-').map(Number);
-        filtered = filtered.filter(u => u.age >= min && u.age <= max);
-      }
-      if (cat) filtered = filtered.filter(u => u.category === cat);
-
-      if (!noRender) {
-        currentPage = 1;
-        renderCards();
-      }
-      return filtered;
-    }
-
-    function nextPage() {
-      const filtered = applyFilters(true);
-      if (currentPage * usersPerPage < filtered.length) {
-        currentPage++;
-        renderCards();
-      }
-    }
-
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderCards();
-      }
-    }
-
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    renderCards();
-  </script>
+  <button id="backToTop" onclick="scrollToTop()">↑</button>
 </body>
 </html>
