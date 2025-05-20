@@ -1,103 +1,97 @@
-// User Data (100 static profiles)
-const users = Array.from({ length: 100 }, (_, i) => {
-  const names = ["Ritika", "Priya", "Roma", "Lovy", "Anamika", "Pricy", "Kajal", "Pooja", "Megha", "Simran"];
-  const locations = [
-    "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aligaj", "Chinhat", "Indiranagar",
-    "Mahanagar", "Kapoorthala", "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh",
-    "Aishbagh", "PGI Road", "Patrakarpuram", "MunsiPuliya", "ThediPuliya",
-    "BBD University city", "Lucknow University city", "Girls college"
-  ];
-  const age = Math.floor(Math.random() * 23) + 18;
-  let category = "";
-  if (age >= 18 && age <= 19) category = "College Girl";
-  else if (age >= 20 && age <= 30) category = "Bhabhi";
-  else if (age >= 35 && age <= 40) category = "Aunty";
-  return {
-    name: names[Math.floor(Math.random() * names.length)],
-    age,
-    location: locations[Math.floor(Math.random() * locations.length)],
-    category,
-    <img src="${user.image || 'images/default.jpg'}" alt="${user.name}" style="width:100%; border-radius:10px;">
-  };
-});
+// gallery.js
 
-// Pagination
+// Sample locations and categories (adjust as needed)
+const LOCATIONS = [
+  "Gomti nagar", "Ashiyana", "Telebagh", "Para", "Aligaj", "Chinhat", "Indiranagar",
+  "Mahanagar", "Kapoorthala", "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh",
+  "Aishbagh", "PGI Road", "Patrakarpuram", "MunsiPuliya", "ThediPuliya",
+  "BBD University city", "Lucknow University city", "Girls college"
+];
+
+const CATEGORIES = ["College Girl", "Bhabhi", "Aunty"];
+const USERS_PER_PAGE = 10;
 let currentPage = 1;
-const profilesPerPage = 9;
 
-// DOM Elements
-const userCards = document.getElementById("userCards");
-const pageNumber = document.getElementById("pageNumber");
-const searchName = document.getElementById("searchName");
-const filterLocation = document.getElementById("filter-location");
-const filterAge = document.getElementById("filter-age");
-const filterCategory = document.getElementById("filter-category");
+function loadUsersFromStorage() {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  return users;
+}
 
-function filterUsers() {
-  return users.filter(u => {
-    const nameMatch = !searchName.value || u.name.toLowerCase().includes(searchName.value.toLowerCase());
-    const locMatch = !filterLocation.value || u.location === filterLocation.value;
-    const ageMatch =
-      !filterAge.value ||
-      (filterAge.value === "18-25" && u.age >= 18 && u.age <= 25) ||
-      (filterAge.value === "26-35" && u.age >= 26 && u.age <= 35) ||
-      (filterAge.value === "36-40" && u.age >= 36 && u.age <= 40);
-    const catMatch = !filterCategory.value || u.category === filterCategory.value;
-    return nameMatch && locMatch && ageMatch && catMatch;
+function getFilteredUsers(users) {
+  const location = document.getElementById("locationFilter").value;
+  const age = document.getElementById("ageFilter").value;
+  const category = document.getElementById("categoryFilter").value;
+
+  return users.filter(user => {
+    const ageNum = parseInt(user.age, 10);
+    const matchLocation = !location || user.location === location;
+    const matchAge = !age || parseInt(age) === ageNum;
+    const matchCategory = !category || user.category === category;
+    return matchLocation && matchAge && matchCategory;
   });
 }
 
-function renderUsers() {
-  const filtered = filterUsers();
-  const totalPages = Math.ceil(filtered.length / profilesPerPage);
-  const start = (currentPage - 1) * profilesPerPage;
-  const currentUsers = filtered.slice(start, start + profilesPerPage);
+function renderUsers(users) {
+  const container = document.getElementById("userCards");
+  container.innerHTML = "";
 
-  userCards.innerHTML = currentUsers.map(user => `
-    <div class="user-card">
-     <img src="${user.image || 'images/default.jpg'}" alt="${user.name}" style="width:100%; border-radius:10px;">
-      <div class="user-info">
+  const start = (currentPage - 1) * USERS_PER_PAGE;
+  const pageUsers = users.slice(start, start + USERS_PER_PAGE);
+
+  pageUsers.forEach(user => {
+    const card = document.createElement("div");
+    card.className = "user-card";
+
+    card.innerHTML = `
+      <div class="card-img">
+        <img src="images/${user.image}" alt="${user.name}">
+      </div>
+      <div class="card-info">
         <h3>${user.name}</h3>
         <p>Age: ${user.age}</p>
         <p>Location: ${user.location}</p>
         <p>Category: ${user.category}</p>
-        <div class="user-buttons">
-          <button class="neon-btn call">📞 Call</button>
-          <button class="neon-btn chat">💬 Chat</button>
-          <button class="neon-btn like">❤️ Like</button>
+        <div class="card-actions">
+          <a href="tel:7619937539" class="btn call-btn">Call</a>
+          <a href="https://wa.me/917619937539" class="btn chat-btn" target="_blank">Chat</a>
+          <button class="btn like-btn">❤</button>
         </div>
       </div>
-    </div>
-  `).join("");
+    `;
+    container.appendChild(card);
+  });
 
-  pageNumber.textContent = `Page ${currentPage} of ${totalPages}`;
-  document.getElementById("prevPage").disabled = currentPage === 1;
-  document.getElementById("nextPage").disabled = currentPage === totalPages;
+  document.getElementById("pageIndicator").textContent = `Page ${currentPage}`;
 }
 
-document.getElementById("applyFilter").addEventListener("click", () => {
+function applyFilters() {
+  const allUsers = loadUsersFromStorage();
+  const filtered = getFilteredUsers(allUsers);
   currentPage = 1;
-  renderUsers();
-});
+  renderUsers(filtered);
+}
 
-document.getElementById("prevPage").addEventListener("click", () => {
+function nextPage() {
+  const allUsers = getFilteredUsers(loadUsersFromStorage());
+  if ((currentPage * USERS_PER_PAGE) < allUsers.length) {
+    currentPage++;
+    renderUsers(allUsers);
+  }
+}
+
+function prevPage() {
   if (currentPage > 1) {
     currentPage--;
-    renderUsers();
+    renderUsers(getFilteredUsers(loadUsersFromStorage()));
   }
-});
+}
 
-document.getElementById("nextPage").addEventListener("click", () => {
-  currentPage++;
-  renderUsers();
-});
+// Event bindings
+document.getElementById("applyFilters").addEventListener("click", applyFilters);
+document.getElementById("nextBtn").addEventListener("click", nextPage);
+document.getElementById("prevBtn").addEventListener("click", prevPage);
 
-document.getElementById("backToTop").addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+// Initial load
+document.addEventListener("DOMContentLoaded", () => {
+  applyFilters();
 });
-
-document.getElementById("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});
-
-renderUsers();
