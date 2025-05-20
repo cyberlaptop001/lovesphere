@@ -1,150 +1,94 @@
-// Fallback users in case localStorage is empty
-const fallbackUsers = [
-  {
-    name: "Riya",
-    age: 23,
-    location: "Lucknow",
-    services: "Massage, Companionship",
-    rank: 4.5,
-    image: "images/users/riya.jpg"
-  },
-  {
-    name: "Priya",
-    age: 25,
-    location: "Gomtinagar",
-    services: "Dinner Date, Role-play",
-    rank: 4.7,
-    image: "images/users/priya.jpg"
-  },
-  {
-    name: "Anjali",
-    age: 21,
-    location: "Charbagh",
-    services: "Full Night, Travel",
-    rank: 4.9,
-    image: "images/users/anjali.jpg"
-  }
-];
+// Load users from localStorage (assumes JSON array format)
+const users = JSON.parse(localStorage.getItem("users")) || [];
 
-// Inject fallback users into localStorage if empty
-if (!localStorage.getItem("users") || JSON.parse(localStorage.getItem("users")).length === 0) {
-  localStorage.setItem("users", JSON.stringify(fallbackUsers));
-}
-
-let users = JSON.parse(localStorage.getItem("users"));
+// Pagination
 let currentPage = 1;
-const usersPerPage = 6;
+const usersPerPage = 10;
+let filteredUsers = [...users];
 
-// Render User Cards
-function renderUsers(usersToShow) {
-  const container = document.getElementById("userCards");
-  container.innerHTML = "";
+const userCardsContainer = document.getElementById("userCards");
+const pageNumber = document.getElementById("pageNumber");
 
-  if (usersToShow.length === 0) {
-    container.innerHTML = "<p class='neon-text'>No profiles match your search.</p>";
-    document.getElementById("resultCount").textContent = "Showing 0 of 0 profiles";
-    return;
-  }
+// Render user cards
+function renderCards(usersToRender) {
+  userCardsContainer.innerHTML = "";
 
   const start = (currentPage - 1) * usersPerPage;
   const end = start + usersPerPage;
-  const paginatedUsers = usersToShow.slice(start, end);
+  const pageUsers = usersToRender.slice(start, end);
 
-  for (let user of paginatedUsers) {
+  pageUsers.forEach(user => {
     const card = document.createElement("div");
     card.className = "user-card";
+
     card.innerHTML = `
-      <img src="${user.image}" alt="${user.name}" class="user-image">
-      <div class="user-info">
-        <h3>${user.name}, ${user.age}</h3>
-        <p><strong>Location:</strong> ${user.location}</p>
-        <p><strong>Services:</strong> ${user.services}</p>
-        <p><strong>Rank:</strong> ⭐ ${user.rank}</p>
-        <div class="card-buttons">
-          <button class="call-btn">📞 Call</button>
-          <button class="chat-btn">💬 Chat</button>
-          <button class="like-btn">❤️ Like</button>
-        </div>
+      <img src="${user.image || 'images/default.jpg'}" alt="${user.name}" style="width:100%; border-radius:10px;">
+      <h3>${user.name}</h3>
+      <p>Age: ${user.age}</p>
+      <p>Location: ${user.location}</p>
+      <p>Category: ${user.category}</p>
+      <div style="margin-top:10px; display:flex; gap:10px;">
+        <button onclick="alert('Calling ${user.name}...')">📞 Call</button>
+        <button onclick="alert('Chatting with ${user.name}...')">💬 Chat</button>
+        <button onclick="alert('You liked ${user.name}!')">❤️ Like</button>
       </div>
     `;
-    container.appendChild(card);
-  }
+    userCardsContainer.appendChild(card);
+  });
 
-  document.getElementById("resultCount").textContent = `Showing ${usersToShow.length} profiles`;
-  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
+  pageNumber.textContent = `Page ${currentPage}`;
 }
 
+// Filter function
 function applyFilters() {
-  const name = document.getElementById("searchInput").value.toLowerCase();
-  const location = document.getElementById("locationInput").value.toLowerCase();
-  const services = document.getElementById("serviceInput").value.toLowerCase();
-  const minAge = parseInt(document.getElementById("minAge").value) || 0;
-  const maxAge = parseInt(document.getElementById("maxAge").value) || 100;
-  const sortBy = document.getElementById("sortBy").value;
+  const location = document.getElementById("filter-location").value;
+  const age = document.getElementById("filter-age").value;
+  const category = document.getElementById("filter-category").value;
 
-  let filtered = users.filter(user =>
-    user.name.toLowerCase().includes(name) &&
-    user.location.toLowerCase().includes(location) &&
-    user.services.toLowerCase().includes(services) &&
-    user.age >= minAge &&
-    user.age <= maxAge
-  );
+  filteredUsers = users.filter(user => {
+    const matchLocation = location === "" || user.location === location;
+    const matchCategory = category === "" || user.category === category;
+    const matchAge =
+      age === "" ||
+      (age === "18-25" && user.age >= 18 && user.age <= 25) ||
+      (age === "26-35" && user.age >= 26 && user.age <= 35);
 
-  if (sortBy) {
-    filtered.sort((a, b) => {
-      if (sortBy === "name") return a.name.localeCompare(b.name);
-      if (sortBy === "age" || sortBy === "rank") return a[sortBy] - b[sortBy];
-      if (sortBy === "location") return a.location.localeCompare(b.location);
-      return 0;
-    });
-  }
+    return matchLocation && matchCategory && matchAge;
+  });
 
   currentPage = 1;
-  renderUsers(filtered);
+  renderCards(filteredUsers);
 }
 
-function clearFilters() {
-  document.getElementById("searchInput").value = "";
-  document.getElementById("locationInput").value = "";
-  document.getElementById("serviceInput").value = "";
-  document.getElementById("minAge").value = "";
-  document.getElementById("maxAge").value = "";
-  document.getElementById("sortBy").value = "";
-  currentPage = 1;
-  renderUsers(users);
-}
-
-document.getElementById("filterBtn").addEventListener("click", applyFilters);
-document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
+// Event listeners
+document.getElementById("applyFilter").addEventListener("click", applyFilters);
 document.getElementById("prevPage").addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
-    applyFilters();
+    renderCards(filteredUsers);
   }
 });
 document.getElementById("nextPage").addEventListener("click", () => {
-  if ((currentPage * usersPerPage) < users.length) {
+  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
+  if (currentPage < maxPage) {
     currentPage++;
-    applyFilters();
+    renderCards(filteredUsers);
   }
 });
 
-// Like Button Toggle
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("like-btn")) {
-    e.target.classList.toggle("liked");
-  }
-});
-
-// Back to Top
-document.getElementById("backToTop").addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// Theme Toggle (Optional)
+// Dark mode toggle
 document.getElementById("themeToggle").addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
 });
 
-// Initial Render
-renderUsers(users);
+// Back to top
+const backToTop = document.getElementById("backToTop");
+window.addEventListener("scroll", () => {
+  backToTop.style.display = window.scrollY > 100 ? "block" : "none";
+});
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Initial render
+renderCards(filteredUsers);
