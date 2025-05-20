@@ -3,115 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LoveSphere Gallery</title>
+  <meta name="description" content="100% Verified Escorts and VIP Models in India. View full gallery, filter by city, age & category. Safe, discreet, and 24x7 support."/>
+  <meta name="keywords" content="escort gallery, India escorts, VIP models, verified call girls"/>
+  <meta name="author" content="LoveSphere"/>
+  <title>Gallery | LoveSphere Escorts</title>
   <link rel="stylesheet" href="gallery.css" />
-  <script defer src="gallery.js"></script>
 </head>
 <body>
-  <!-- Background Video -->
-  <video autoplay loop muted playsinline id="bg-video">
-    <source src="videos/bg.mp4" type="video/mp4" />
-  </video>
 
   <!-- Header -->
-  <header class="top-nav">
+  <header>
     <div class="logo">LoveSphere</div>
-    <nav class="nav-links">
-      <a href="policy.html">Policy & Guidelines</a>
-      <a href="gallery.html" class="active">Gallery</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
       <a href="admin.html">Admin Login</a>
-      <button id="themeToggle">Toggle Theme</button>
     </nav>
   </header>
 
-  <!-- Neon Strip -->
-  <div class="cta-strip">
-    <span>100% Genuine</span>
-    <span>Pay After Satisfaction</span>
-    <span>24x7 Services</span>
-    <span>Anytime Call/Chat Help</span>
+  <!-- Announcement -->
+  <div class="announcement">
+    100% Genuine Pay After Satisfaction · 24x7 Services · Anytime Call/Chat Help
   </div>
 
-  <!-- Call Girl + Admin Updates -->
-  <section class="updates-bar">
-    <div class="update-scroll">
-      <span>⭐ Alisha (Gomti Nagar) now available for night bookings!</span>
-      <span>⭐ Admin: Profiles updated with verified badges ✅</span>
-      <span>⭐ Riya (Chinhat) rated 5⭐ by 12 clients this week!</span>
-    </div>
-  </section>
-
-  <!-- Filter Bar -->
+  <!-- Filters -->
   <div class="filter-bar">
-    <select id="filter-location">
+    <select id="locationFilter">
       <option value="">Location</option>
-      <option value="Gomti Nagar">Gomti Nagar</option>
-      <option value="Ashiyana">Ashiyana</option>
-      <option value="Aliganj">Aliganj</option>
-      <option value="Chinhat">Chinhat</option>
-      <option value="Charbagh">Charbagh</option>
-      <option value="Naka">Naka</option>
+      <option>Delhi</option>
+      <option>Mumbai</option>
+      <option>Bangalore</option>
     </select>
-    <select id="filter-age">
+    <select id="ageFilter">
       <option value="">Age</option>
-      <option value="18-25">18-25</option>
-      <option value="26-35">26-35</option>
-      <option value="36-40">36-40</option>
+      <option>18-22</option>
+      <option>23-27</option>
+      <option>28-32</option>
     </select>
-    <select id="filter-category">
+    <select id="categoryFilter">
       <option value="">Category</option>
-      <option value="College Girl">College Girl</option>
-      <option value="Bhabhi">Bhabhi</option>
-      <option value="Aunty">Aunty</option>
+      <option>VIP</option>
+      <option>Independent</option>
+      <option>Russian</option>
     </select>
-    <button id="applyFilter">Apply</button>
+    <button onclick="applyFilters()">Apply</button>
   </div>
 
   <!-- User Cards -->
-  <main class="gallery-container" id="userCards">
-    <!-- JavaScript will inject 100 user cards here from localStorage -->
-  </main>
+  <div id="userCards" class="user-cards"></div>
 
   <!-- Pagination -->
   <div class="pagination">
-    <button id="prevPage">Prev</button>
-    <span id="pageNumber">Page 1</span>
-    <button id="nextPage">Next</button>
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageIndicator">Page 1</span>
+    <button onclick="nextPage()">Next</button>
   </div>
 
-  <!-- SEO Section -->
-  <section class="seo-section">
-    <h2>Delhi Escorts | VIP Models in India</h2>
+  <!-- Updates -->
+  <div class="updates">
+    📢 Latest Admin Updates: Profiles Verified May 2025 | 24x7 Call Girl Booking Open!
+  </div>
+
+  <!-- SEO Footer -->
+  <footer>
+    <h3>Delhi Escorts | VIP Models in India</h3>
     <p>
-      Welcome to LoveSphere – India's #1 trusted platform to find elite models, escorts, and companions. 
+      Welcome to LoveSphere – India’s #1 trusted platform to find elite models, escorts, and companions.
       All profiles are 100% verified, safe, and discreet. Call or chat anytime.
     </p>
-    <p style="display: none;">
-      callgirslucknow, lucknowcallgirls, lucknow call girls, escort lucknow, lucknow escort, escortservice,
-      escortservices escort service lucknow, randi lucknow, lucknowgirls, hotgirls lucknow, prostitutelucknow,
-      prostitutionlucknow, Charbagh girls, girls Charbagh, call girls in Lucknow, Lucknow escort services,
-      escort service in Charbagh, Aliganj Lucknow escorts, Chinhat escort services, Gomtinagar call girls,
-      Lucknow hot girls, Lucknow prostitution services, randi in Lucknow, escort service Naka, escort service
-      Alambagh, Para escort services, Ashiyana call girls, Indiranagar escort service, Mahanagar call girls,
-      escort service Kaisharbagh, BBD City escort services, Lucknow University City escorts, Matiyari escort
-      services, Lucknow call girls numbers, booking call girls in Lucknow, Lucknow night service girls,
-      Lucknow private escorts, Lucknow female escorts, Lucknow escort agency, Charbagh call girls, independent
-      call girls Lucknow, cheap Lucknow escorts, Lucknow escorts, Escort girls Lucknow, Luxurious escort services
-      Lucknow, Professional call girls Lucknow, Premium call girls Lucknow, Escort services Lucknow, Lucknow escort girls
-    </p>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="policy.html">Policy</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <p>&copy; 2025 LoveSphere. All rights reserved.</p>
+    <a href="#">About</a> | <a href="#">Policy</a> | <a href="#">Contact</a><br/><br/>
+    © 2025 LoveSphere. All rights reserved.
   </footer>
 
   <!-- Back to Top -->
-  <button id="backToTop" title="Back to top">↑</button>
+  <div id="backToTop" onclick="scrollToTop()">↑</div>
+
+  <!-- Scripts -->
+  <script>
+    const totalUsers = 100;
+    const usersPerPage = 10;
+    let currentPage = 1;
+    const userCards = [];
+
+    // Generate fake user data
+    for (let i = 1; i <= totalUsers; i++) {
+      userCards.push({
+        name: "Model " + i,
+        age: 18 + (i % 10),
+        location: ["Delhi", "Mumbai", "Bangalore"][i % 3],
+        category: ["VIP", "Independent", "Russian"][i % 3],
+        img: `https://source.unsplash.com/200x200/?girl,face,model&sig=${i}`
+      });
+    }
+
+    function renderCards() {
+      const start = (currentPage - 1) * usersPerPage;
+      const end = start + usersPerPage;
+      const container = document.getElementById('userCards');
+      container.innerHTML = '';
+
+      const filtered = applyFilters(true);
+      const pageItems = filtered.slice(start, end);
+
+      pageItems.forEach(user => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        card.innerHTML = `
+          <img src="${user.img}" alt="${user.name}" />
+          <div class="user-info">
+            <h3>${user.name}</h3>
+            <p>Location: ${user.location}</p>
+            <p>Age: ${user.age}</p>
+            <p>Category: ${user.category}</p>
+            <div class="user-actions">
+              <a href="tel:7619937539"><button>📞 Call</button></a>
+              <a href="https://wa.me/917619937539" target="_blank"><button>💬 Chat</button></a>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('pageIndicator').textContent = `Page ${currentPage}`;
+    }
+
+    function applyFilters(noRender) {
+      const loc = document.getElementById('locationFilter').value;
+      const age = document.getElementById('ageFilter').value;
+      const cat = document.getElementById('categoryFilter').value;
+
+      let filtered = [...userCards];
+      if (loc) filtered = filtered.filter(u => u.location === loc);
+      if (age) {
+        const [min, max] = age.split('-').map(Number);
+        filtered = filtered.filter(u => u.age >= min && u.age <= max);
+      }
+      if (cat) filtered = filtered.filter(u => u.category === cat);
+
+      if (!noRender) {
+        currentPage = 1;
+        renderCards();
+      }
+      return filtered;
+    }
+
+    function nextPage() {
+      const filtered = applyFilters(true);
+      if (currentPage * usersPerPage < filtered.length) {
+        currentPage++;
+        renderCards();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderCards();
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    renderCards();
+  </script>
 </body>
 </html>
