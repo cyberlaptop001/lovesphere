@@ -1,142 +1,173 @@
-/* Dark background + neon text */
+/* Reset & Base */
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+a {
+    color: #00f0ff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+button, select {
+    font-family: inherit;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #00f0ff;
+    border: 1px solid #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+    cursor: pointer;
+}
+button:hover, select:hover {
+    background-color: #111;
 }
 
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -1;
-  object-fit: cover;
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00f0ff;
+    text-shadow: 0 0 10px #00f0ff;
+}
+nav a {
+    margin-left: 20px;
+    font-weight: bold;
 }
 
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+/* Announcement bar */
+.announcement {
+    text-align: center;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 10px;
+    color: #00f0ff;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00f0ff;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #0ff;
-  text-shadow: 0 0 10px #0ff;
-}
-
-.nav-links a, .nav-links button {
-  margin-left: 1rem;
-  color: #fff;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.nav-links a:hover, .nav-links button:hover {
-  color: #0ff;
-  text-shadow: 0 0 5px #0ff;
-}
-
-.cta-strip {
-  background: rgba(0, 255, 255, 0.1);
-  text-align: center;
-  padding: 0.5rem;
-  font-weight: bold;
-  color: #0ff;
-  text-shadow: 0 0 5px #0ff;
-}
-
+/* Filter bar */
 .filter-bar {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  gap: 10px;
-  background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-.filter-bar select,
-.filter-bar button {
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #0ff;
-  background: black;
-  color: #0ff;
-  box-shadow: 0 0 5px #0ff;
+/* User Cards */
+.user-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
 }
-
-.gallery-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 2rem;
-  gap: 2rem;
-}
-
 .user-card {
-  width: 300px;
-  background: #111;
-  border: 1px solid #0ff;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 0 10px #0ff;
+    display: flex;
+    background: #111;
+    border: 1px solid #00f0ff;
+    box-shadow: 0 0 15px #00f0ff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 800px;
+    transition: transform 0.3s ease;
+}
+.user-card:hover {
+    transform: scale(1.01);
+}
+.user-card img {
+    width: 200px;
+    height: 100%;
+    object-fit: cover;
+}
+.user-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.user-info h3 {
+    margin: 0 0 10px;
+    color: #00f0ff;
+}
+.user-info p {
+    margin: 5px 0;
+}
+.user-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
 }
 
+/* Pagination */
 .pagination {
-  text-align: center;
-  padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
 }
 
-.pagination button {
-  padding: 0.5rem 1rem;
-  margin: 0 5px;
-  background: black;
-  color: #0ff;
-  border: 1px solid #0ff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px #0ff;
-  cursor: pointer;
-}
-
-.seo-section {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.02);
-  color: #fff;
-  text-align: center;
-}
-
+/* Footer */
 footer {
-  background: #000;
-  padding: 1rem;
-  text-align: center;
-  color: #888;
+    background: #000;
+    color: #00f0ff;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #00f0ff;
+}
+footer a {
+    margin: 0 10px;
 }
 
-.footer-links a {
-  margin: 0 1rem;
-  color: #0ff;
-  text-decoration: none;
-}
-
+/* Back to Top */
 #backToTop {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #0ff;
-  color: #000;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #0ff;
-  cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00f0ff;
+    color: #000;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px #00f0ff;
+}
+
+/* Admin/Call Girl Update Section */
+.updates {
+    padding: 20px;
+    background: rgba(0,0,0,0.8);
+    border-top: 1px solid #00f0ff;
+    border-bottom: 1px solid #00f0ff;
+    text-align: center;
+    color: #00f0ff;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00f0ff;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .user-card {
+        flex-direction: column;
+        align-items: center;
+    }
+    .user-card img {
+        width: 100%;
+        height: 250px;
+    }
 }
