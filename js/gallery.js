@@ -55,7 +55,7 @@ function renderUsers() {
 
   userCards.innerHTML = currentUsers.map(user => `
     <div class="user-card">
-      <img src="${user.image}" alt="${user.name}" />
+     <img src="${user.image || 'images/default.jpg'}" alt="${user.name}" style="width:100%; border-radius:10px;">
       <div class="user-info">
         <h3>${user.name}</h3>
         <p>Age: ${user.age}</p>
