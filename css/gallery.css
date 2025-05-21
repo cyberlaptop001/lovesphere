@@ -37,7 +37,8 @@ button,
 .footer-links a,
 #applyFilter,
 #clearFilterBtn,
-#filterBtn {
+#filterBtn,
+#themeToggle {
   padding: 10px 18px;
   border-radius: 25px;
   border: 2px solid #0ff;
@@ -50,6 +51,7 @@ button,
   transition: 0.3s;
   text-decoration: none;
   display: inline-block;
+  pointer-events: auto;
 }
 .neon-button:hover,
 button:hover,
@@ -57,18 +59,11 @@ button:hover,
 .footer-links a:hover,
 #applyFilter:hover,
 #clearFilterBtn:hover,
-#filterBtn:hover {
+#filterBtn:hover,
+#themeToggle:hover {
   background: #0ff;
   color: #000;
   box-shadow: 0 0 20px #0ff;
-}
-
-/* Explicitly enable pointer events for buttons */
-#applyFilter,
-#clearFilterBtn,
-#filterBtn,
-.footer-links a {
-  pointer-events: auto;
 }
 
 /* Header */
@@ -266,6 +261,7 @@ footer .footer-links a {
   box-shadow: 0 0 10px #0ff;
   text-decoration: none;
   display: inline-block;
+  pointer-events: auto;
 }
 footer .footer-links a:hover {
   background: #0ff;
