@@ -1,72 +1,62 @@
-// gallery.js
+// js/gallery.js
 
-const userCardsContainer = document.getElementById("userCards");
-const prevBtn = document.getElementById("prevPage");
-const nextBtn = document.getElementById("nextPage");
-const pageNumberSpan = document.getElementById("pageNumber");
-const backToTopBtn = document.getElementById("backToTop");
-
-const locationFilter = document.getElementById("filter-location");
-const ageFilter = document.getElementById("filter-age");
-const categoryFilter = document.getElementById("filter-category");
-const applyFilterBtn = document.getElementById("applyFilter");
-
-let currentPage = 1;
-const profilesPerPage = 20;
-let allUsers = [];
-
+const users = [];
 const names = [
-  "Ritika", "Priya", "Roma", "Sonam", "Lovy", "Anamika", "Simran", "Kajal", "Pooja", "Neha",
-  "Sapna", "Komal", "Tina", "Nisha", "Divya", "Shreya", "Megha", "Nikita", "Isha", "Roshni",
-  "Sneha", "Payal", "Aarti", "Sana", "Preeti", "Khushi", "Mansi", "Rekha", "Rani", "Jyoti",
-  "Muskan", "Pinky", "Swati", "Rupali", "Bhavna", "Kirti", "Tanvi", "Ritu", "Alisha", "Deepika",
-  "Sakshi", "Heena", "Radha", "Pallavi", "Rubi", "Rakhi", "Madhu", "Kiran", "Seema", "Chandni",
-  "Ayesha", "Jaya", "Monika", "Anita", "Lata", "Reshma", "Pari", "Tanya", "Twinkle", "Jhanvi",
-  "Sheetal", "Farah", "Tanu", "Zoya", "Kavita", "Namrata", "Rupal", "Reema", "Mahima", "Shruti",
-  "Aastha", "Devanshi", "Vaishali", "Garima", "Ridhima", "Arohi", "Anju", "Bhumi", "Suman", "Naina",
-  "Diya", "Richa", "Shalini", "Ankita", "Chhavi", "Urvashi", "Shweta", "Mithila", "Nargis", "Surbhi",
-  "Kanika", "Payal", "Meera", "Nandini", "Avantika", "Archana", "Prerna", "Karishma", "Ira", "Ishita"
+  "Ritika", "Priya", "Roma", "Lovy", "Anamika", "Simran", "Pooja", "Kajal", "Rani", "Sonam",
+  "Divya", "Neha", "Nisha", "Sapna", "Sonia", "Komal", "Meena", "Kavita", "Sneha", "Rekha",
+  "Aarti", "Pinky", "Kiran", "Shilpa", "Anjali", "Radha", "Tina", "Ruchi", "Payal", "Jaya",
+  "Swati", "Monika", "Bhavna", "Karishma", "Roshni", "Naina", "Juhi", "Mahi", "Preeti", "Ayesha",
+  "Sana", "Tanya", "Megha", "Trisha", "Diksha", "Isha", "Garima", "Twinkle", "Ira", "Rhea",
+  "Kashish", "Nupur", "Seema", "Reena", "Chandni", "Shraddha", "Aparna", "Pallavi", "Mona", "Jenny",
+  "Manju", "Vidya", "Yamini", "Sheetal", "Bharti", "Shweta", "Alka", "Archana", "Ritika", "Vandana",
+  "Urvashi", "Namrata", "Surbhi", "Ragini", "Farah", "Rukhsar", "Rubina", "Shanaya", "Anushka", "Deepa",
+  "Lata", "Barkha", "Harshita", "Asmita", "Gauri", "Heena", "Indu", "Kanika", "Kritika", "Leena",
+  "Manisha", "Nimisha", "Ojaswi", "Padmini", "Rupali", "Sangeeta", "Tanisha", "Vaishali", "Zara", "Nargis"
 ];
 
 const locations = [
-  "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aliganj", "Chinhat", "Indiranagar", "Mahanagar",
-  "Kapoorthala", "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh", "Aishbagh", "PGI Road",
-  "Patrakarpuram", "MunsiPuliya", "ThediPuliya", "BBD University city", "Lucknow University city", "Girls college"
+  "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aliganj", "Chinhat", "Indiranagar", "Mahanagar", "Kapoorthala",
+  "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh", "Aishbagh", "PGI Road", "Patrakarpuram",
+  "MunsiPuliya", "ThediPuliya", "BBD University city", "Lucknow University city", "Girls college"
 ];
 
-function generateProfiles() {
-  const users = [];
-  for (let i = 1; i <= 100; i++) {
-    const age = Math.floor(Math.random() * 23) + 18;
-    let category = "";
-    if (age <= 19) category = "College Girl";
-    else if (age >= 20 && age <= 30) category = "Bhabhi";
-    else if (age >= 35) category = "Aunty";
-    const name = names[i - 1] || `User${i}`;
-    users.push({
-      id: i,
-      name,
-      age,
-      location: locations[Math.floor(Math.random() * locations.length)],
-      category,
-      image: `images/user${i}.jpg`
-    });
-  }
-  return users;
+for (let i = 0; i < 100; i++) {
+  const name = names[i % names.length];
+  const age = Math.floor(Math.random() * 23) + 18;
+  const location = locations[Math.floor(Math.random() * locations.length)];
+
+  let category = "";
+  if (age <= 19) category = "College Girl";
+  else if (age <= 30) category = "Bhabhi";
+  else category = "Aunty";
+
+  users.push({
+    name,
+    age,
+    location,
+    category,
+    image: `images/user${i + 1}.jpg`
+  });
 }
 
-function renderUsers(users) {
-  userCardsContainer.innerHTML = "";
-  const startIndex = (currentPage - 1) * profilesPerPage;
-  const endIndex = startIndex + profilesPerPage;
-  const usersToShow = users.slice(startIndex, endIndex);
+const cardsPerPage = 20;
+let currentPage = 1;
+const container = document.getElementById("userCards");
+const prevBtn = document.getElementById("prevPage");
+const nextBtn = document.getElementById("nextPage");
+const pageNumber = document.getElementById("pageNumber");
 
-  usersToShow.forEach((user) => {
+function displayUsers(page = 1) {
+  container.innerHTML = "";
+  const start = (page - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+
+  users.slice(start, end).forEach((user) => {
     const card = document.createElement("div");
     card.className = "user-card";
     card.innerHTML = `
       <div class="user-image-container">
-        <img class="user-img" src="${user.image}" alt="${user.name}" />
+        <img src="${user.image}" alt="${user.name}" class="user-img" />
       </div>
       <div class="user-info">
         <p><strong>Name:</strong> ${user.name}</p>
@@ -80,54 +70,80 @@ function renderUsers(users) {
         </div>
       </div>
     `;
-    userCardsContainer.appendChild(card);
+    container.appendChild(card);
   });
 
-  pageNumberSpan.textContent = `Page ${currentPage}`;
+  pageNumber.textContent = `Page ${currentPage}`;
 }
 
 function applyFilters() {
-  let filtered = [...allUsers];
-  const loc = locationFilter.value;
-  const age = ageFilter.value;
-  const cat = categoryFilter.value;
+  const nameFilter = document.querySelector("input[placeholder='Search by name...']").value.toLowerCase();
+  const locationFilter = document.getElementById("filter-location").value;
+  const ageMin = parseInt(document.getElementById("filter-age-min").value) || 18;
+  const ageMax = parseInt(document.getElementById("filter-age-max").value) || 40;
+  const categoryFilter = document.getElementById("filter-category").value;
 
-  if (loc) filtered = filtered.filter(u => u.location === loc);
-  if (age === "18-25") filtered = filtered.filter(u => u.age >= 18 && u.age <= 25);
-  if (age === "26-35") filtered = filtered.filter(u => u.age >= 26 && u.age <= 35);
-  if (age === "36-40") filtered = filtered.filter(u => u.age >= 36 && u.age <= 40);
-  if (cat) filtered = filtered.filter(u => u.category === cat);
+  const filtered = users.filter(user => {
+    return (
+      user.name.toLowerCase().includes(nameFilter) &&
+      (!locationFilter || user.location === locationFilter) &&
+      user.age >= ageMin &&
+      user.age <= ageMax &&
+      (!categoryFilter || user.category === categoryFilter)
+    );
+  });
 
-  currentPage = 1;
-  renderUsers(filtered);
+  renderFiltered(filtered);
 }
 
-function initGallery() {
-  allUsers = generateProfiles();
-  renderUsers(allUsers);
-
-  applyFilterBtn.addEventListener("click", applyFilters);
-  prevBtn.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      renderUsers(allUsers);
-    }
+function renderFiltered(list) {
+  container.innerHTML = "";
+  list.forEach(user => {
+    const card = document.createElement("div");
+    card.className = "user-card";
+    card.innerHTML = `
+      <div class="user-image-container">
+        <img src="${user.image}" alt="${user.name}" class="user-img" />
+      </div>
+      <div class="user-info">
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Age:</strong> ${user.age}</p>
+        <p><strong>Location:</strong> ${user.location}, Lucknow</p>
+        <p><strong>Category:</strong> ${user.category}</p>
+        <div class="card-buttons">
+          <a href="tel:7619937539">Call Me</a>
+          <a href="https://wa.me/917619937539" target="_blank">Chat Me</a>
+          <button class="like-button">Like Me</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
   });
-  nextBtn.addEventListener("click", () => {
-    if ((currentPage * profilesPerPage) < allUsers.length) {
-      currentPage++;
-      renderUsers(allUsers);
-    }
-  });
-
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  document.getElementById("themeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("light-mode");
-    document.body.classList.toggle("dark-mode");
-  });
+  pageNumber.textContent = `Filtered Result`;
+  prevBtn.style.display = "none";
+  nextBtn.style.display = "none";
 }
 
-document.addEventListener("DOMContentLoaded", initGallery);
+document.getElementById("applyFilter").addEventListener("click", applyFilters);
+
+prevBtn.onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    displayUsers(currentPage);
+  }
+};
+
+nextBtn.onclick = () => {
+  const totalPages = Math.ceil(users.length / cardsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    displayUsers(currentPage);
+  }
+};
+
+document.getElementById("backToTop").onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// Initial Load
+displayUsers(currentPage);
