@@ -63,6 +63,14 @@ button:hover,
   box-shadow: 0 0 20px #0ff;
 }
 
+/* Explicitly enable pointer events for buttons */
+#applyFilter,
+#clearFilterBtn,
+#filterBtn,
+.footer-links a {
+  pointer-events: auto;
+}
+
 /* Header */
 .top-menu {
   display: flex;
@@ -257,6 +265,7 @@ footer .footer-links a {
   text-shadow: 0 0 5px #0ff;
   box-shadow: 0 0 10px #0ff;
   text-decoration: none;
+  display: inline-block;
 }
 footer .footer-links a:hover {
   background: #0ff;
