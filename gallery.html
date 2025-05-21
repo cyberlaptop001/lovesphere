@@ -2,90 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gallery | LoveSphere</title>
-  <link rel="stylesheet" href="css/gallery.css">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="Find Lucknow's top escort services including call girls, VIP models, and private companions." />
+  <meta name="keywords" content="callgirslucknow, lucknowcallgirls, escort lucknow, lucknow escort services, Lucknow hot girls, escortservice, randi lucknow, Charbagh girls, independent Lucknow escorts, VIP call girls Lucknow, 24/7 escort service Lucknow" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
   <script defer src="js/gallery.js"></script>
 </head>
-<body>
-  <!-- Video Background -->
-  <video autoplay muted loop id="bg-video">
-    <source src="videos/background.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
+<body class="dark-mode">
+  <!-- 🔮 Background Video -->
+  <div class="video-background">
+    <video autoplay muted loop id="bgVideo">
+      <source src="videos/bg.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">LoveSphere</div>
+  <!-- 🔝 Back to Top -->
+  <button id="backToTop">↑ BACK TO TOP</button>
+
+  <!-- 🌟 Top Menu -->
+  <header class="top-menu">
+    <div class="logo neon-text"><span class="neon-text">Love</span><span class="neon-pink">Sphere</span></div>
     <nav>
-      <a href="policy.html">Policy & Guidelines</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="admin.html">Admin Login</a>
-      <button onclick="toggleTheme()">Toggle Theme</button>
+      <a href="index.html" class="neon-button">Home</a>
+      <a href="gallery.html" class="neon-button active">Gallery</a>
+      <a href="#" class="neon-button">Policy & Guidelines</a>
+      <a href="#" class="neon-button">Admin Login</a>
     </nav>
+    <button id="themeToggle" class="neon-button">Toggle Theme</button>
   </header>
 
-  <!-- Tagline -->
-  <div class="tagline">
-    100% Genuine Pay After Satisfaction 24x7 Services Anytime Call/Chat Help
+  <!-- 🔍 Filter Bar -->
+  <div id="filterBar" class="category-filter">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+    <input type="text" id="locationInput" placeholder="Location" />
+    <input type="text" id="serviceInput" placeholder="Services" />
+    <input type="number" id="minAge" placeholder="Min Age" />
+    <input type="number" id="maxAge" placeholder="Max Age" />
+    <select id="sortBy">
+      <option value="">Sort By</option>
+      <option value="name">Name</option>
+      <option value="age">Age</option>
+      <option value="rank">Rank</option>
+      <option value="location">Location</option>
+    </select>
+    <button id="filterBtn" class="neon-button">Apply Filters</button>
+    <button id="clearFilterBtn" class="neon-button">Clear Filters</button>
   </div>
 
-  <!-- Filter Bar -->
-  <div class="filter-bar">
-    <select id="locationFilter"><option value="">Location</option></select>
-    <select id="ageFilter"><option value="">Age</option></select>
-    <select id="categoryFilter"><option value="">Category</option></select>
-    <button onclick="applyFilters()">Apply</button>
-  </div>
+  <div id="resultCount"></div>
 
-  <!-- User Cards Container -->
-  <section id="userCards" class="user-cards"></section>
+  <!-- 👤 User Cards -->
+  <div class="user-container" id="userCards"></div>
 
-  <!-- Pagination -->
+  <!-- 🔄 Pagination -->
   <div class="pagination">
-    <button onclick="prevPage()">Prev</button>
+    <button id="prevPage" class="neon-button">Previous</button>
     <span id="pageNumber">Page 1</span>
-    <button onclick="nextPage()">Next</button>
+    <button id="nextPage" class="neon-button">Next</button>
   </div>
 
-  <!-- SEO Content -->
-  <section class="seo-content">
-    <h2>Delhi Escorts | VIP Models in India</h2>
-    <p>Welcome to LoveSphere – India’s #1 trusted platform to find elite models, escorts, and companions. All profiles are 100% verified, safe, and discreet. Call or chat anytime.</p>
-  </section>
+  <!-- 🧠 SEO Content -->
+  <div class="info-boxes">
+    <div class="neon-box">
+      <h2>Top Escorts and Call Girls in Lucknow</h2>
+      <p>
+        LoveSphere connects you with <span class="highlight">premium call girls in Lucknow</span>, including <strong>Charbagh escorts</strong>, <strong>Aliganj companions</strong>, and <strong>Gomtinagar escort girls</strong>.
+      </p>
+      <p>
+        Whether you’re looking for <strong>college girls, bhabhi escorts, or aunty models</strong>, LoveSphere lists the best <strong>female escort services in Lucknow</strong>. Verified, private, and discreet.
+      </p>
+      <p>
+        <strong class="highlight">Book trusted, verified escorts in Lucknow</strong> with just one click. Services include <em>happy endings, custom role-play, and VIP escort experiences</em> across Lucknow.
+      </p>
+    </div>
 
-  <!-- Admin and Call Girl Updates -->
-  <section class="updates">
-    <div class="update-box">
-      <h3>🔥 Latest Call Girl Updates</h3>
+    <div class="neon-box admin-box">
+      <h2><i class="icon">📰</i> Admin Updates</h2>
+      <p><strong>Important:</strong> <span class="highlight">Service will be temporarily unavailable tonight from 12:00 AM to 2:00 AM</span> due to server maintenance.</p>
       <ul>
-        <li>Neha, 22, Mumbai – New Arrival</li>
-        <li>Pooja, 24, Delhi – Verified VIP</li>
-        <li>Riya, 25, Bangalore – Available Tonight</li>
+        <li>🟠 New Models arriving this weekend in Charbagh and Gomtinagar! Check back for updated listings and premium services.</li>
+        <li>🔔 Tip: Use filters to find your ideal companion faster based on age, height, and location.</li>
       </ul>
     </div>
-    <div class="update-box">
-      <h3>🛠️ Admin Notices</h3>
-      <ul>
-        <li>100+ profiles updated weekly</li>
-        <li>24x7 chat/call support available</li>
-        <li>Strict privacy & identity protection</li>
-      </ul>
-    </div>
-  </section>
+  </div>
 
-  <!-- Footer -->
+  <!-- 🦶 Footer -->
   <footer>
-    <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="policy.html">Policy</a>
-      <a href="contact.html">Contact</a>
-    </div>
     <p>&copy; 2025 LoveSphere. All rights reserved.</p>
+    <div class="seo-buttons">
+      <button onclick="location.href='index.html'">SEO Page</button>
+      <button onclick="location.href='gallery.html'">Gallery</button>
+      <button onclick="location.href='#'">Privacy Policy</button>
+      <button onclick="location.href='#'">Admin Login</button>
+    </div>
   </footer>
 
-  <!-- Back to Top -->
-  <button id="backToTop" onclick="scrollToTop()">↑</button>
+  <!-- 💬 Message Box -->
+  <div class="popup hidden" id="messagePopup"><span id="popupText">Message</span></div>
+  <div id="messagePopup" class="message-popup hidden">
+    <p id="popupText"></p>
+  </div>
 </body>
 </html>
