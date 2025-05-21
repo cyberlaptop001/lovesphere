@@ -1,79 +1,69 @@
-// Constants
-const usersPerPage = 10;
-let currentPage = 1;
+// Initialize variables
+let users = [];
 let filteredUsers = [];
+let currentPage = 1;
+const profilesPerPage = 20;
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadFilters();
-  renderUsers();
-});
+// Example realistic names
+const names = [
+  "Ritika", "Priya", "Roma", "Lovy", "Anamika", "Sonam", "Kajal", "Nikita", "Roshni", "Tina",
+  "Simran", "Preeti", "Pooja", "Neha", "Swati", "Divya", "Rani", "Payal", "Sonia", "Anjali",
+  "Rekha", "Kiran", "Mona", "Sapna", "Megha", "Shalini", "Pinky", "Naina", "Komal", "Juhi",
+  "Khushboo", "Aarti", "Shraddha", "Radha", "Ishita", "Kritika", "Rashmi", "Sneha", "Twinkle", "Muskan",
+  "Chandni", "Gudiya", "Ayesha", "Sana", "Ruksar", "Meher", "Jiya", "Trisha", "Ruchi", "Vidya"
+];
 
-function loadFilters() {
-  const data = getAllUsers();
-  const locations = [...new Set(data.map(user => user.location))];
-  const ages = [...new Set(data.map(user => user.age))];
-  const categories = [...new Set(data.map(user => user.category))];
+const locations = [
+  "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aliganj", "Chinhat", "Indiranagar", "Mahanagar",
+  "Kapoorthala", "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh", "Aishbagh", "PGI Road",
+  "Patrakarpuram", "MunsiPuliya", "ThediPuliya", "BBD University city", "Lucknow University city", "Girls college"
+];
 
-  populateSelect("locationFilter", locations);
-  populateSelect("ageFilter", ages);
-  populateSelect("categoryFilter", categories);
+// Generate users
+function generateUsers() {
+  for (let i = 1; i <= 100; i++) {
+    const age = Math.floor(Math.random() * 23) + 18; // 18–40
+    let category = "Bhabhi";
+    if (age <= 19) category = "College Girl";
+    else if (age >= 35) category = "Aunty";
+
+    const user = {
+      name: names[(i - 1) % names.length],
+      age,
+      location: locations[Math.floor(Math.random() * locations.length)],
+      category,
+      image: `images/user${i}.jpg`
+    };
+    users.push(user);
+  }
+  filteredUsers = [...users];
 }
+generateUsers();
 
-function populateSelect(id, values) {
-  const select = document.getElementById(id);
-  values.sort().forEach(val => {
-    const option = document.createElement("option");
-    option.value = val;
-    option.textContent = val;
-    select.appendChild(option);
-  });
-}
-
-function getAllUsers() {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  return users;
-}
-
-function applyFilters() {
-  const location = document.getElementById("locationFilter").value;
-  const age = document.getElementById("ageFilter").value;
-  const category = document.getElementById("categoryFilter").value;
-
-  const allUsers = getAllUsers();
-  filteredUsers = allUsers.filter(user => {
-    return (!location || user.location === location) &&
-           (!age || user.age === age) &&
-           (!category || user.category === category);
-  });
-
-  currentPage = 1;
-  renderUsers();
-}
-
+// Render user cards
 function renderUsers() {
-  const allUsers = getAllUsers();
-  const users = filteredUsers.length ? filteredUsers : allUsers;
-
-  const start = (currentPage - 1) * usersPerPage;
-  const end = start + usersPerPage;
-  const usersToDisplay = users.slice(start, end);
-
   const container = document.getElementById("userCards");
   container.innerHTML = "";
+  const start = (currentPage - 1) * profilesPerPage;
+  const end = start + profilesPerPage;
+  const pageUsers = filteredUsers.slice(start, end);
 
-  usersToDisplay.forEach(user => {
+  pageUsers.forEach(user => {
     const card = document.createElement("div");
     card.className = "user-card";
     card.innerHTML = `
-      <img src="images/${user.image}" alt="${user.name}">
+      <div class="user-image-container">
+        <img src="${user.image}" alt="${user.name}" class="user-img" />
+      </div>
       <div class="user-info">
-        <h3>${user.name}, ${user.age}</h3>
-        <p><strong>Location:</strong> ${user.location}</p>
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Age:</strong> ${user.age}</p>
+        <p><strong>Location:</strong> ${user.location}, Lucknow</p>
         <p><strong>Category:</strong> ${user.category}</p>
-        <p>${user.description}</p>
-        <div class="buttons">
-          <a href="tel:7619937539" class="btn call-btn">Call</a>
-          <a href="https://wa.me/917619937539" target="_blank" class="btn chat-btn">Chat</a>
+        <div class="card-buttons">
+          <a href="tel:7619937539">Call Me</a>
+          <a href="https://wa.me/917619937539" target="_blank">Chat Me</a>
+          <button class="like-button">Like Me</button>
         </div>
       </div>
     `;
@@ -83,22 +73,74 @@ function renderUsers() {
   document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
 }
 
-function nextPage() {
-  const users = filteredUsers.length ? filteredUsers : getAllUsers();
-  const maxPage = Math.ceil(users.length / usersPerPage);
-  if (currentPage < maxPage) {
-    currentPage++;
-    renderUsers();
-  }
+// Filter logic
+function applyFilters() {
+  const name = document.getElementById("searchInput").value.toLowerCase();
+  const location = document.getElementById("locationInput").value.toLowerCase();
+  const service = document.getElementById("serviceInput").value.toLowerCase();
+  const minAge = parseInt(document.getElementById("minAge").value);
+  const maxAge = parseInt(document.getElementById("maxAge").value);
+
+  filteredUsers = users.filter(user => {
+    return (!name || user.name.toLowerCase().includes(name)) &&
+           (!location || user.location.toLowerCase().includes(location)) &&
+           (!isNaN(minAge) ? user.age >= minAge : true) &&
+           (!isNaN(maxAge) ? user.age <= maxAge : true);
+  });
+
+  currentPage = 1;
+  renderUsers();
 }
 
-function prevPage() {
+// Clear filters
+function clearFilters() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("locationInput").value = "";
+  document.getElementById("serviceInput").value = "";
+  document.getElementById("minAge").value = "";
+  document.getElementById("maxAge").value = "";
+  filteredUsers = [...users];
+  currentPage = 1;
+  renderUsers();
+}
+
+// Pagination controls
+document.getElementById("prevPage").addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     renderUsers();
   }
-}
+});
+document.getElementById("nextPage").addEventListener("click", () => {
+  const totalPages = Math.ceil(filteredUsers.length / profilesPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderUsers();
+  }
+});
 
-function scrollToTop() {
+// Filter buttons
+document.getElementById("filterBtn").addEventListener("click", applyFilters);
+document.getElementById("clearFilterBtn").addEventListener("click", clearFilters);
+
+// Like Button Action
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("like-button")) {
+    e.target.classList.toggle("liked");
+    e.target.textContent = e.target.classList.contains("liked") ? "Liked" : "Like Me";
+  }
+});
+
+// Theme Toggle
+document.getElementById("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  document.body.classList.toggle("dark-mode");
+});
+
+// Back to Top
+document.getElementById("backToTop").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
+});
+
+// Initial Render
+renderUsers();
