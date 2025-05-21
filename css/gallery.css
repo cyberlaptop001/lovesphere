@@ -117,6 +117,22 @@ body.light-mode {
   box-shadow: 0 0 10px #ff00ff;
   font-weight: bold;
 }
+#filterBar button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px solid #0ff;
+  background: transparent;
+  color: #0ff;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 0 0 5px #0ff;
+  box-shadow: 0 0 10px #0ff;
+  transition: 0.3s;
+}
+#filterBar button:hover {
+  background: #0ff;
+  color: #000;
+}
 
 /* User Cards */
 .user-container {
@@ -242,6 +258,7 @@ footer .seo-buttons button {
   text-shadow: 0 0 5px #0ff;
   box-shadow: 0 0 10px #0ff;
   cursor: pointer;
+  transition: 0.3s;
 }
 footer .seo-buttons button:hover {
   background: #0ff;
@@ -260,6 +277,15 @@ footer .admin-updates {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  display: none;
+  display: block;
   z-index: 99;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 10px #0f0;
+  cursor: pointer;
 }
