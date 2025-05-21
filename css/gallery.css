@@ -60,15 +60,25 @@ body.light-mode {
   top: 0;
   z-index: 10;
   backdrop-filter: blur(5px);
+  flex-wrap: wrap;
 }
 .logo {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: bold;
   color: #00ffcc;
   text-shadow: 0 0 15px #00ffcc;
+  text-align: center;
+  flex: 1 1 100%;
+  margin-bottom: 10px;
+}
+.top-menu nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
 }
 .top-menu nav a {
-  margin: 0 10px;
   text-decoration: none;
   color: #ff00ff;
   font-weight: bold;
