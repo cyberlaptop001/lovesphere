@@ -4,28 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LoveSphere Gallery</title>
-  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/gallery.css" />
+  <link rel="stylesheet" href="css/style.css" /> <!-- Matches homepage -->
   <script defer src="js/gallery.js"></script>
+  <script defer src="js/home.js"></script> <!-- Menu, toggle, backToTop -->
 </head>
 <body class="dark-mode">
-  <!-- Video Background -->
+  <!-- Background Video -->
   <div class="video-background">
     <video autoplay muted loop playsinline>
       <source src="videos/bg.mp4" type="video/mp4" />
     </video>
   </div>
 
-  <!-- Top Header -->
+  <!-- Top Navigation -->
   <header class="top-menu">
-    <div class="logo">LoveSphere</div>
+    <div class="logo">Love<span style="color:#ff00ff">Sphere</span></div>
     <nav>
       <a href="index.html">Home</a>
       <a href="gallery.html" class="active">Gallery</a>
       <a href="policy.html">Policy & Guidelines</a>
       <a href="admin.html">Admin Login</a>
+      <button id="themeToggle">Toggle Theme</button>
     </nav>
-    <button id="themeToggle">Toggle Theme</button>
   </header>
 
   <!-- Neon Strip -->
@@ -38,13 +39,18 @@
 
   <!-- Filter Bar -->
   <div id="filterBar">
-    <input type="text" id="searchName" placeholder="Search by name..." />
-    <input type="text" id="locationFilter" placeholder="Location" />
-    <input type="text" id="servicesFilter" placeholder="Services" />
-    <input type="number" id="minAge" placeholder="Min Age" />
-    <input type="number" id="maxAge" placeholder="Max Age" />
+    <input type="text" id="searchName" placeholder="Search by name...">
+    <select id="filterLocation">
+      <option value="">Location</option>
+    </select>
+    <select id="filterServices">
+      <option value="">Services</option>
+    </select>
+    <input type="number" id="minAge" placeholder="Min Age">
+    <input type="number" id="maxAge" placeholder="Max Age">
     <select id="sortBy">
       <option value="">Sort By</option>
+      <option value="name">Name</option>
       <option value="age">Age</option>
       <option value="rank">Rank</option>
     </select>
@@ -52,41 +58,45 @@
     <button onclick="clearFilters()">Clear Filters</button>
   </div>
 
-  <!-- User Cards Container -->
-  <div class="user-container" id="userCards"></div>
+  <!-- User Cards -->
+  <div class="user-container" id="userCards">
+    <!-- JS will inject 100 styled user cards -->
+  </div>
 
   <!-- Pagination -->
   <div class="pagination">
-    <button onclick="changePage(-1)">PREVIOUS</button>
-    <span id="pageInfo">Page 1</span>
-    <button onclick="changePage(1)">NEXT</button>
+    <button id="prevPage">Previous</button>
+    <span id="pageNumber">Page 1</span>
+    <button id="nextPage">Next</button>
   </div>
 
-  <!-- SEO Section -->
-  <div class="seo-block">
-    <h2>Top Escorts and Call Girls in Lucknow</h2>
-    <p>
-      LoveSphere connects you with <strong>premium call girls in Lucknow</strong>, including <strong>Charbagh escorts, Aliganj companions</strong>, and <strong>Gomtinagar escort girls</strong>.
-      Our <strong>independent Lucknow escorts</strong> offer services ranging from <em>private companionship</em> to <em>24/7 full satisfaction</em>.
-    </p>
-    <p>
-      Whether you're looking for <strong>college girls, bhabhi escorts, or aunty models</strong>, LoveSphere lists the best <strong>female escort services in Lucknow</strong>.
-      Available now in <strong>Chinhat, Para, Ashiyana, Indiranagar, Kaisharbagh</strong>, and more.
-    </p>
-    <p>
-      <strong>Book trusted, verified escorts in Lucknow</strong> with just one click. Enjoy services like <em>happy endings, custom role-play</em>, and <strong>VIP escort experiences</strong> across the city.
-    </p>
-  </div>
+  <!-- SEO Text Section -->
+  <section class="seo-section">
+    <div class="seo-content">
+      <h2>Top Escorts and Call Girls in Lucknow</h2>
+      <p>
+        LoveSphere connects you with <strong>premium call girls in Lucknow</strong>, including <strong>Charbagh escorts</strong>, <strong>Aliganj companions</strong>, and <strong>Gomtinagar escort girls</strong>.
+      </p>
+      <p>
+        Whether you're looking for <strong>college girls</strong>, <strong>bhabhi escorts</strong>, or <strong>aunty models</strong>, LoveSphere lists the best <strong>female escort services in Lucknow</strong>. Available now in <strong>Chinhat, Para, Ashiyana, Indiranagar, Kaisharbagh</strong>, and more.
+      </p>
+      <p>
+        <strong>Book trusted, verified escorts in Lucknow</strong> with just one click. Services include <em>happy endings, custom role-play</em>, and <strong>VIP escort experiences</strong> across the city.
+      </p>
+    </div>
+  </section>
 
   <!-- Admin Updates -->
-  <div class="admin-updates">
-    <h2>Admin Updates</h2>
-    <p><strong>Important:</strong> <span style="color: hotpink">Service will be temporarily unavailable tonight from 12:00 AM to 2:00 AM</span> due to server maintenance.</p>
-    <ul>
-      <li>🔥 New Models arriving this weekend in Charbagh and Gomtinagar! Check back for updated listings and premium services.</li>
-      <li>🔎 Tip: Use filters to find your ideal companion faster based on age, height, and location.</li>
-    </ul>
-  </div>
+  <section class="seo-section">
+    <div class="seo-content">
+      <h2><i class="fas fa-bullhorn"></i> Admin Updates</h2>
+      <p><strong>Important:</strong> <span style="color:#ff00ff">Service will be temporarily unavailable tonight from 12:00 AM to 2:00 AM</span> due to server maintenance.</p>
+      <ul>
+        <li>🔥 New Models arriving this weekend in Charbagh and Gomtinagar! Check back for updated listings and premium services.</li>
+        <li>💡 Tip: Use filters to find your ideal companion faster based on age, height, and location.</li>
+      </ul>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -96,13 +106,10 @@
       <button>Privacy Policy</button>
       <button>Admin Login</button>
     </div>
-    <div class="seo-text">
-      © 2025 LoveSphere. All Rights Reserved and Copyright Protected.
-    </div>
+    <div class="admin-updates">© 2025 LoveSphere. All Rights Reserved and Copyright Protected.</div>
   </footer>
 
-  <!-- Back to Top -->
-  <button id="backToTop" onclick="scrollToTop()">&uarr; BACK TO TOP</button>
-
+  <!-- Back to Top Button -->
+  <button id="backToTop">↑ BACK TO TOP</button>
 </body>
 </html>
