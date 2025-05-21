@@ -117,7 +117,10 @@ body.light-mode {
   box-shadow: 0 0 10px #ff00ff;
   font-weight: bold;
 }
-#filterBar button {
+#filterBar button,
+#applyFilter,
+#clearFilterBtn,
+#filterBtn {
   padding: 10px 20px;
   border-radius: 8px;
   border: 2px solid #0ff;
@@ -129,7 +132,10 @@ body.light-mode {
   box-shadow: 0 0 10px #0ff;
   transition: 0.3s;
 }
-#filterBar button:hover {
+#filterBar button:hover,
+#applyFilter:hover,
+#clearFilterBtn:hover,
+#filterBtn:hover {
   background: #0ff;
   color: #000;
 }
@@ -247,7 +253,8 @@ footer .seo-buttons {
   gap: 10px;
   margin-bottom: 10px;
 }
-footer .seo-buttons button, footer .seo-buttons a {
+footer .seo-buttons button,
+footer .seo-buttons a {
   margin: 5px;
   background: transparent;
   border: 2px solid #0ff;
@@ -261,7 +268,8 @@ footer .seo-buttons button, footer .seo-buttons a {
   text-decoration: none;
   display: inline-block;
 }
-footer .seo-buttons button:hover, footer .seo-buttons a:hover {
+footer .seo-buttons button:hover,
+footer .seo-buttons a:hover {
   background: #0ff;
   color: black;
   box-shadow: 0 0 20px #0ff;
