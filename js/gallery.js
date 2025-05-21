@@ -1,149 +1,166 @@
 // js/gallery.js
 
-const users = [];
-const names = [
-  "Ritika", "Priya", "Roma", "Lovy", "Anamika", "Simran", "Pooja", "Kajal", "Rani", "Sonam",
-  "Divya", "Neha", "Nisha", "Sapna", "Sonia", "Komal", "Meena", "Kavita", "Sneha", "Rekha",
-  "Aarti", "Pinky", "Kiran", "Shilpa", "Anjali", "Radha", "Tina", "Ruchi", "Payal", "Jaya",
-  "Swati", "Monika", "Bhavna", "Karishma", "Roshni", "Naina", "Juhi", "Mahi", "Preeti", "Ayesha",
-  "Sana", "Tanya", "Megha", "Trisha", "Diksha", "Isha", "Garima", "Twinkle", "Ira", "Rhea",
-  "Kashish", "Nupur", "Seema", "Reena", "Chandni", "Shraddha", "Aparna", "Pallavi", "Mona", "Jenny",
-  "Manju", "Vidya", "Yamini", "Sheetal", "Bharti", "Shweta", "Alka", "Archana", "Ritika", "Vandana",
-  "Urvashi", "Namrata", "Surbhi", "Ragini", "Farah", "Rukhsar", "Rubina", "Shanaya", "Anushka", "Deepa",
-  "Lata", "Barkha", "Harshita", "Asmita", "Gauri", "Heena", "Indu", "Kanika", "Kritika", "Leena",
-  "Manisha", "Nimisha", "Ojaswi", "Padmini", "Rupali", "Sangeeta", "Tanisha", "Vaishali", "Zara", "Nargis"
-];
+const usersPerPage = 20;
+let currentPage = 1;
+let users = [];
+let filteredUsers = [];
+let isDarkMode = true;
 
+// Sample data pool
+const names = ["Ritika", "Priya", "Roma", "Lovy", "Anamika", "Sonam", "Pooja", "Kajal", "Rani", "Simran"];
+const subCategories = ["Model", "Celebrity", "News Anchor", "Bollywood Model"];
+const descriptions = [
+  "Hot, romantic, and full GFE experience with wild fantasies.",
+  "Lingerie, roleplay, long hours, full night services.",
+  "Desi fun, tight romance, soft touch and passionate moments.",
+  "100% satisfaction, no rush service, sweet and naughty behavior."
+];
 const locations = [
-  "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aliganj", "Chinhat", "Indiranagar", "Mahanagar", "Kapoorthala",
-  "Nishatganj", "Charbagh", "Naka", "Chauk", "Kaisarbagh", "Aishbagh", "PGI Road", "Patrakarpuram",
+  "Gomti Nagar", "Ashiyana", "Telebagh", "Para", "Aliganj", "Chinhat",
+  "Indiranagar", "Mahanagar", "Kapoorthala", "Nishatganj", "Charbagh",
+  "Naka", "Chauk", "Kaisarbagh", "Aishbagh", "PGI Road", "Patrakarpuram",
   "MunsiPuliya", "ThediPuliya", "BBD University city", "Lucknow University city", "Girls college"
 ];
 
-for (let i = 0; i < 100; i++) {
-  const name = names[i % names.length];
-  const age = Math.floor(Math.random() * 23) + 18;
-  const location = locations[Math.floor(Math.random() * locations.length)];
+function generateUsers() {
+  users = [];
+  for (let i = 1; i <= 100; i++) {
+    const age = 18 + Math.floor(Math.random() * 23); // 18–40
+    const category = age <= 19 ? "College Girl" : age <= 30 ? "Bhabhi" : "Aunty";
+    const name = names[i % names.length] + " " + (i + 1);
+    const location = locations[i % locations.length];
+    const subCategory = subCategories[i % subCategories.length];
+    const description = descriptions[i % descriptions.length];
+    const isTopRated = i % 10 === 0;
+    const image = `images/user${i}.jpg`;
 
-  let category = "";
-  if (age <= 19) category = "College Girl";
-  else if (age <= 30) category = "Bhabhi";
-  else category = "Aunty";
-
-  users.push({
-    name,
-    age,
-    location,
-    category,
-    image: `images/user${i + 1}.jpg`
-  });
+    users.push({
+      name,
+      age,
+      location,
+      category,
+      subCategory,
+      description,
+      image,
+      verified: true,
+      topRated: isTopRated
+    });
+  }
+  filteredUsers = [...users];
 }
 
-const cardsPerPage = 20;
-let currentPage = 1;
-const container = document.getElementById("userCards");
-const prevBtn = document.getElementById("prevPage");
-const nextBtn = document.getElementById("nextPage");
-const pageNumber = document.getElementById("pageNumber");
-
-function displayUsers(page = 1) {
+function renderUsers() {
+  const container = document.getElementById("userCards");
   container.innerHTML = "";
-  const start = (page - 1) * cardsPerPage;
-  const end = start + cardsPerPage;
 
-  users.slice(start, end).forEach((user) => {
+  const start = (currentPage - 1) * usersPerPage;
+  const end = start + usersPerPage;
+
+  filteredUsers.slice(start, end).forEach(user => {
     const card = document.createElement("div");
     card.className = "user-card";
+
     card.innerHTML = `
       <div class="user-image-container">
         <img src="${user.image}" alt="${user.name}" class="user-img" />
       </div>
       <div class="user-info">
+        ${user.topRated ? `<span class="badge top-rated">Top Rated</span>` : ""}
+        ${user.verified ? `<span class="verified-badge">✔ Verified</span>` : ""}
         <p><strong>Name:</strong> ${user.name}</p>
         <p><strong>Age:</strong> ${user.age}</p>
         <p><strong>Location:</strong> ${user.location}, Lucknow</p>
         <p><strong>Category:</strong> ${user.category}</p>
+        <p><strong>Sub-Category:</strong> ${user.subCategory}</p>
+        <p><strong>Description:</strong> ${user.description}</p>
         <div class="card-buttons">
-          <a href="tel:7619937539">Call Me</a>
-          <a href="https://wa.me/917619937539" target="_blank">Chat Me</a>
-          <button class="like-button">Like Me</button>
+          <a href="tel:7619937539" class="neon-button">📞 Call</a>
+          <a href="https://wa.me/917619937539" target="_blank" class="neon-button">💬 Chat</a>
+          <button class="like-button neon-button">❤️ Like</button>
         </div>
       </div>
     `;
+
+    card.querySelector(".like-button").addEventListener("click", () => {
+      alert(`You liked ${user.name}!`);
+    });
+
     container.appendChild(card);
   });
 
-  pageNumber.textContent = `Page ${currentPage}`;
+  document.getElementById("pageNumber").textContent = `Page ${currentPage}`;
 }
 
 function applyFilters() {
-  const nameFilter = document.querySelector("input[placeholder='Search by name...']").value.toLowerCase();
-  const locationFilter = document.getElementById("filter-location").value;
-  const ageMin = parseInt(document.getElementById("filter-age-min").value) || 18;
-  const ageMax = parseInt(document.getElementById("filter-age-max").value) || 40;
-  const categoryFilter = document.getElementById("filter-category").value;
+  const name = document.getElementById("searchName").value.toLowerCase();
+  const location = document.getElementById("locationFilter").value.toLowerCase();
+  const subCategory = document.getElementById("subCategoryFilter").value.toLowerCase();
+  const minAge = parseInt(document.getElementById("minAge").value) || 18;
+  const maxAge = parseInt(document.getElementById("maxAge").value) || 40;
+  const sortBy = document.getElementById("sortBy").value;
 
-  const filtered = users.filter(user => {
+  filteredUsers = users.filter(user => {
     return (
-      user.name.toLowerCase().includes(nameFilter) &&
-      (!locationFilter || user.location === locationFilter) &&
-      user.age >= ageMin &&
-      user.age <= ageMax &&
-      (!categoryFilter || user.category === categoryFilter)
+      user.name.toLowerCase().includes(name) &&
+      user.location.toLowerCase().includes(location) &&
+      user.subCategory.toLowerCase().includes(subCategory) &&
+      user.age >= minAge &&
+      user.age <= maxAge
     );
   });
 
-  renderFiltered(filtered);
+  if (sortBy === "name") {
+    filteredUsers.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === "age") {
+    filteredUsers.sort((a, b) => a.age - b.age);
+  }
+
+  currentPage = 1;
+  renderUsers();
 }
 
-function renderFiltered(list) {
-  container.innerHTML = "";
-  list.forEach(user => {
-    const card = document.createElement("div");
-    card.className = "user-card";
-    card.innerHTML = `
-      <div class="user-image-container">
-        <img src="${user.image}" alt="${user.name}" class="user-img" />
-      </div>
-      <div class="user-info">
-        <p><strong>Name:</strong> ${user.name}</p>
-        <p><strong>Age:</strong> ${user.age}</p>
-        <p><strong>Location:</strong> ${user.location}, Lucknow</p>
-        <p><strong>Category:</strong> ${user.category}</p>
-        <div class="card-buttons">
-          <a href="tel:7619937539">Call Me</a>
-          <a href="https://wa.me/917619937539" target="_blank">Chat Me</a>
-          <button class="like-button">Like Me</button>
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-  pageNumber.textContent = `Filtered Result`;
-  prevBtn.style.display = "none";
-  nextBtn.style.display = "none";
+function clearFilters() {
+  document.getElementById("searchName").value = "";
+  document.getElementById("locationFilter").value = "";
+  document.getElementById("subCategoryFilter").value = "";
+  document.getElementById("minAge").value = "";
+  document.getElementById("maxAge").value = "";
+  document.getElementById("sortBy").value = "";
+  filteredUsers = [...users];
+  currentPage = 1;
+  renderUsers();
 }
 
-document.getElementById("applyFilter").addEventListener("click", applyFilters);
+function changePage(dir) {
+  const maxPage = Math.ceil(filteredUsers.length / usersPerPage);
+  if (dir === -1 && currentPage > 1) currentPage--;
+  if (dir === 1 && currentPage < maxPage) currentPage++;
+  renderUsers();
+}
 
-prevBtn.onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    displayUsers(currentPage);
-  }
-};
-
-nextBtn.onclick = () => {
-  const totalPages = Math.ceil(users.length / cardsPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
-    displayUsers(currentPage);
-  }
-};
-
-document.getElementById("backToTop").onclick = () => {
+function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
-};
+}
 
-// Initial Load
-displayUsers(currentPage);
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle("dark-mode", isDarkMode);
+  document.body.classList.toggle("light-mode", !isDarkMode);
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+}
+
+// Event Listeners
+window.onload = () => {
+  generateUsers();
+  renderUsers();
+
+  document.getElementById("applyFilter").onclick = applyFilters;
+  document.getElementById("clearFilter").onclick = clearFilters;
+  document.getElementById("prevPage").onclick = () => changePage(-1);
+  document.getElementById("nextPage").onclick = () => changePage(1);
+  document.getElementById("backToTop").onclick = scrollToTop;
+  document.getElementById("themeToggle").onclick = toggleTheme;
+
+  const theme = localStorage.getItem("theme");
+  if (theme === "light") toggleTheme();
+};
