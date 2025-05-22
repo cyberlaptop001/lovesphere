@@ -130,10 +130,12 @@ function closePopup() {
 }
 
 function callUser(name) {
+  window.location.href = "tel:7619937539";
   showPopup(`📞 Calling ${name}...`);
 }
 
 function chatUser(name) {
+  window.open("https://wa.me/7619937539", "_blank");
   showPopup(`💬 Starting chat with ${name}...`);
 }
 
