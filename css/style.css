@@ -603,4 +603,48 @@ footer a {
   border-color: #00ff88;
   box-shadow: 0 0 20px #00ff88, 0 0 40px #ff00ff;
 }
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .nav-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .video-background video {
+    object-fit: cover;
+  }
+
+  .user-container,
+  .user-card,
+  .card-buttons {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .special-offer {
+    display: none;
+  }
+
+  .info-boxes {
+    padding: 0 10px;
+  }
+
+  .seo-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
 
