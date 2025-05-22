@@ -604,40 +604,33 @@ footer a {
   box-shadow: 0 0 20px #00ff88, 0 0 40px #ff00ff;
 }
 /* Fix for button overlap on small screens */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .user-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 12px; /* spacing between buttons */
-    padding: 10px 0;
-    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
   }
 
-  .user-actions .action-btn {
+  .user-card .action-btn {
     width: 80%;
     font-size: 16px;
   }
 
-  .user-card {
-    margin: 15px auto;
-    padding: 15px;
-  }
-
-  .user-info {
+  .user-info p {
+    font-size: 14px;
     text-align: center;
   }
 
-  .user-info p {
-    font-size: 14px;
+  .user-image-container img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 10px;
   }
 
-  .user-image-container img {
-    max-width: 90%;
-    height: auto;
-    display: block;
-    margin: 0 auto 15px;
+  .user-card {
+    padding: 15px;
   }
 }
-
