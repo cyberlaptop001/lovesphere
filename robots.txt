@@ -4,4 +4,3 @@ Disallow: /backend/
 Allow: /
 
 Sitemap: https://cyberlaptop001.github.io/lovesphere/sitemap.xml
-
