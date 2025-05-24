@@ -3,5 +3,4 @@ Disallow: /admin.html
 Disallow: /backend/
 Allow: /
 
-Sitemap: https://cyberlaptop001.github.io/lovesphere/sitemap.html
-
+Sitemap: https://cyberlaptop001.github.io/lovesphere/sitemap.xml
